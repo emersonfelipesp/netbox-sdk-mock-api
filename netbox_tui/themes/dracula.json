@@ -1,0 +1,39 @@
+{
+    "name": "dracula",
+    "label": "Dracula",
+    "dark": true,
+    "foreground": "#F8F8F2",
+    "aliases": ["dracula-dark"],
+    "colors": {
+        "primary": "#BD93F9",
+        "secondary": "#6272A4",
+        "warning": "#F1FA8C",
+        "error": "#FF5555",
+        "success": "#50FA7B",
+        "accent": "#FF79C6",
+        "background": "#282A36",
+        "surface": "#2B2D34",
+        "panel": "#30323A",
+        "boost": "#363842"
+    },
+    "variables": {
+        "nb-success-text": "#50FA7B",
+        "nb-info-text": "#8BE9FD",
+        "nb-warning-text": "#F1FA8C",
+        "nb-danger-text": "#FF5555",
+        "nb-secondary-text": "#A0AAB4",
+        "nb-success-bg": "#1A3A22",
+        "nb-info-bg": "#1A3040",
+        "nb-warning-bg": "#3A2E0D",
+        "nb-danger-bg": "#3A1A1A",
+        "nb-secondary-bg": "#2B2D34",
+        "nb-border": "#3E4150",
+        "nb-border-subtle": "#363842",
+        "nb-muted-text": "#A0AAB4",
+        "nb-link-text": "#8BE9FD",
+        "nb-id-text": "#BD93F9",
+        "nb-key-text": "#FF79C6",
+        "nb-logo-accent": "#BD93F9",
+        "nb-logo-wordmark": "#F8F8F2"
+    }
+}

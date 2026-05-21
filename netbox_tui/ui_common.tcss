@@ -1,0 +1,1444 @@
+Screen {
+    layout: vertical;
+    background: $background;
+}
+
+Screen:ansi {
+    background: $background;
+    color: $foreground;
+}
+
+.hidden {
+    display: none;
+}
+
+* {
+    scrollbar-size: 1 1;
+    scrollbar-background: transparent;
+    scrollbar-background-hover: $foreground 4%;
+    scrollbar-background-active: $foreground 8%;
+    scrollbar-color: $foreground 30%;
+    scrollbar-color-hover: $primary 65%;
+    scrollbar-color-active: $primary;
+    scrollbar-corner-color: transparent;
+}
+
+.nbx-button {
+    /* Discrete terminal approximation of the shared button formula:
+       3-row capsule, symmetric horizontal inset, centered label. */
+    height: 3;
+    min-height: 3;
+    min-width: 8;
+    width: auto;
+    padding: 0 1 0 1;
+    content-align: center middle;
+    background: transparent;
+}
+
+.nbx-panel-body {
+    background: transparent;
+    height: 1fr;
+}
+
+.nbx-panel-header {
+    height: auto;
+}
+
+.nbx-panel-body.nbx-surface--background {
+    background: $background;
+}
+
+.nbx-panel-body.nbx-surface--surface {
+    background: $surface;
+}
+
+.nbx-panel-body.nbx-surface--panel {
+    background: $panel;
+}
+
+.nbx-button--small {
+    min-width: 8;
+    padding: 0 1 0 1;
+}
+
+.nbx-button--medium {
+    min-width: 11;
+    padding: 0 2 0 2;
+}
+
+.nbx-button--large {
+    min-width: 15;
+    padding: 0 3 0 3;
+}
+
+.nbx-panel-header.nbx-tone--default .panel-title {
+    color: $foreground;
+}
+
+.nbx-panel-header.nbx-tone--primary .panel-title {
+    color: $primary;
+}
+
+.nbx-panel-header.nbx-tone--secondary .panel-title {
+    color: $secondary;
+}
+
+.nbx-panel-header.nbx-tone--success .panel-title {
+    color: $success;
+}
+
+.nbx-panel-header.nbx-tone--warning .panel-title {
+    color: $warning;
+}
+
+.nbx-panel-header.nbx-tone--error .panel-title {
+    color: $error;
+}
+
+.nbx-panel-header.nbx-tone--muted .panel-title {
+    color: $nb-muted-text;
+}
+
+.nbx-button.nbx-tone--default {
+    color: $foreground;
+    border: round $nb-border-subtle;
+}
+
+.nbx-button.nbx-tone--secondary {
+    color: $secondary;
+    border: round $secondary;
+}
+
+.nbx-button.nbx-tone--primary {
+    color: $primary;
+    border: round $primary;
+}
+
+.nbx-button.nbx-tone--success {
+    color: $success;
+    border: round $success;
+}
+
+.nbx-button.nbx-tone--warning {
+    color: $warning;
+    border: round $warning;
+}
+
+.nbx-button.nbx-tone--error {
+    color: $error;
+    border: round $error;
+}
+
+.nbx-button.nbx-tone--muted {
+    color: $nb-muted-text;
+    border: round $nb-border-subtle;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--default,
+.nbx-button.nbx-button--soft.nbx-tone--muted {
+    background: $panel;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--secondary {
+    background: $secondary 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--primary {
+    background: $primary 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--success {
+    background: $success 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--warning {
+    background: $warning 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--error {
+    background: $error 12%;
+}
+
+.nbx-button.nbx-tone--default:hover,
+.nbx-button.nbx-tone--muted:hover {
+    tint: $foreground 12%;
+}
+
+.nbx-button.nbx-tone--secondary:hover {
+    tint: $secondary 12%;
+}
+
+.nbx-button.nbx-tone--primary:hover {
+    tint: $primary 12%;
+}
+
+.nbx-button.nbx-tone--success:hover {
+    tint: $success 12%;
+}
+
+.nbx-button.nbx-tone--warning:hover {
+    tint: $warning 12%;
+}
+
+.nbx-button.nbx-tone--error:hover {
+    tint: $error 12%;
+}
+
+.nbx-button:focus {
+    border: round $secondary;
+}
+
+.nbx-button.nbx-tone--default:focus,
+.nbx-button.nbx-tone--muted:focus {
+    tint: $foreground 18%;
+}
+
+.nbx-button.nbx-tone--secondary:focus {
+    tint: $secondary 18%;
+}
+
+.nbx-button.nbx-tone--primary:focus {
+    tint: $primary 18%;
+}
+
+.nbx-button.nbx-tone--success:focus {
+    tint: $success 18%;
+}
+
+.nbx-button.nbx-tone--warning:focus {
+    tint: $warning 18%;
+}
+
+.nbx-button.nbx-tone--error:focus {
+    tint: $error 18%;
+}
+
+.nbx-button:ansi {
+    background: transparent;
+    color: $foreground;
+    border: round $nb-border-subtle;
+    tint: transparent;
+    background-tint: transparent;
+}
+
+.nbx-button.nbx-tone--default:ansi,
+.nbx-button.nbx-tone--muted:ansi {
+    color: $foreground;
+    border: round $nb-border-subtle;
+}
+
+.nbx-button.nbx-tone--secondary:ansi {
+    color: $secondary;
+    border: round $secondary;
+}
+
+.nbx-button.nbx-tone--primary:ansi {
+    color: $primary;
+    border: round $primary;
+}
+
+.nbx-button.nbx-tone--success:ansi {
+    color: $success;
+    border: round $success;
+}
+
+.nbx-button.nbx-tone--warning:ansi {
+    color: $warning;
+    border: round $warning;
+}
+
+.nbx-button.nbx-tone--error:ansi {
+    color: $error;
+    border: round $error;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--default:ansi,
+.nbx-button.nbx-button--soft.nbx-tone--muted:ansi {
+    background: $panel;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--secondary:ansi {
+    background: $secondary 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--primary:ansi {
+    background: $primary 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--success:ansi {
+    background: $success 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--warning:ansi {
+    background: $warning 12%;
+}
+
+.nbx-button.nbx-button--soft.nbx-tone--error:ansi {
+    background: $error 12%;
+}
+
+.nbx-button.nbx-tone--default:ansi:hover,
+.nbx-button.nbx-tone--muted:ansi:hover {
+    tint: $foreground 12%;
+}
+
+.nbx-button.nbx-tone--secondary:ansi:hover {
+    tint: $secondary 12%;
+}
+
+.nbx-button.nbx-tone--primary:ansi:hover {
+    tint: $primary 12%;
+}
+
+.nbx-button.nbx-tone--success:ansi:hover {
+    tint: $success 12%;
+}
+
+.nbx-button.nbx-tone--warning:ansi:hover {
+    tint: $warning 12%;
+}
+
+.nbx-button.nbx-tone--error:ansi:hover {
+    tint: $error 12%;
+}
+
+.nbx-button:ansi:focus {
+    border: round $secondary;
+    background-tint: transparent;
+}
+
+.nbx-button.nbx-tone--default:ansi:focus,
+.nbx-button.nbx-tone--muted:ansi:focus {
+    tint: $foreground 18%;
+}
+
+.nbx-button.nbx-tone--secondary:ansi:focus {
+    tint: $secondary 18%;
+}
+
+.nbx-button.nbx-tone--primary:ansi:focus {
+    tint: $primary 18%;
+}
+
+.nbx-button.nbx-tone--success:ansi:focus {
+    tint: $success 18%;
+}
+
+.nbx-button.nbx-tone--warning:ansi:focus {
+    tint: $warning 18%;
+}
+
+.nbx-button.nbx-tone--error:ansi:focus {
+    tint: $error 18%;
+}
+
+.nbx-button:ansi.-active {
+    background-tint: transparent;
+}
+
+.nbx-button:ansi:disabled {
+    tint: transparent;
+    background-tint: transparent;
+}
+
+/* Top navigation sizing standard:
+   - nav bar minimum height: 2 rows
+   - nav controls minimum height: 2 rows
+   - all children remain vertically centered within the bar */
+
+#topbar,
+#dev_topbar {
+    width: 1fr;
+    height: auto;
+    min-height: 2;
+    background: $background;
+    border: tall transparent;
+    border-bottom: solid $nb-border-subtle;
+    padding: 0 1;
+    margin: 0 0 1 0;
+    align: left middle;
+}
+
+#topbar:focus-within,
+#dev_topbar:focus-within {
+    border: tall $secondary;
+}
+
+#topbar_left,
+#topbar_right,
+#dev_topbar_left,
+#dev_topbar_right {
+    width: 1fr;
+    height: auto;
+}
+
+#topbar_left,
+#dev_topbar_left {
+    align: left middle;
+}
+
+#topbar_center,
+#dev_topbar_center {
+    width: auto;
+    min-width: 19;
+    height: auto;
+    align: center middle;
+}
+
+#topbar_right,
+#dev_topbar_right {
+    align: right middle;
+}
+
+#nav_dot,
+#dev_nav_dot {
+    width: 1;
+    height: 3;
+    margin-right: 1;
+    color: $primary;
+    content-align: center middle;
+    text-style: bold;
+}
+
+#topbar_logo,
+#dev_logo {
+    width: auto;
+    height: 3;
+    min-height: 2;
+    margin: 0 0 0 1;
+    color: $primary;
+    text-style: bold;
+    text-align: center;
+    content-align: center middle;
+    text-wrap: nowrap;
+}
+
+#topbar_cli_suffix,
+#dev_topbar_cli_suffix {
+    width: auto;
+    height: 3;
+    min-height: 2;
+    margin: 0 1 0 1;
+    color: $foreground;
+    content-align: center middle;
+    text-style: bold;
+    text-wrap: nowrap;
+}
+
+#clock,
+#dev_clock {
+    width: auto;
+    height: 3;
+    min-height: 2;
+    min-width: 8;
+    color: $nb-muted-text;
+    content-align: right middle;
+}
+
+#clock {
+    margin-left: 1;
+    content-align: right middle;
+}
+
+#dev_clock {
+    margin-right: 1;
+}
+
+#connection_badge,
+#dev_connection_badge {
+    width: 1;
+    height: 3;
+    min-height: 2;
+    color: $nb-secondary-text;
+    content-align: center middle;
+    text-style: bold;
+}
+
+#connection_badge {
+    margin-left: 1;
+    margin-right: 1;
+    padding: 0;
+    border: none;
+    content-align: center middle;
+}
+
+#dev_connection_badge {
+    margin-right: 1;
+}
+
+#connection_badge.-checking,
+#dev_connection_badge.-checking {
+    color: $nb-warning-text;
+}
+
+#connection_badge.-ok,
+#dev_connection_badge.-ok {
+    color: $nb-success-text;
+}
+
+#connection_badge.-warning,
+#dev_connection_badge.-warning {
+    color: $nb-warning-text;
+}
+
+#connection_badge.-error,
+#dev_connection_badge.-error {
+    color: $nb-danger-text;
+}
+
+#theme_select,
+#dev_theme_select,
+#view_select,
+#dev_view_select {
+    width: 20;
+    min-width: 20;
+    margin-right: 1;
+    border: none;
+    background: transparent;
+}
+
+#theme_select SelectCurrent,
+#dev_theme_select SelectCurrent,
+#view_select SelectCurrent,
+#dev_view_select SelectCurrent {
+    height: 3;
+    min-height: 2;
+    border: tall $nb-border-subtle;
+    color: $foreground;
+    background: transparent;
+    padding: 0 1;
+    margin: 0;
+    content-align: left middle;
+}
+
+#context_line,
+#dev_context_line {
+    width: auto;
+    height: 3;
+    min-height: 2;
+    max-width: 42;
+    margin-left: 1;
+    color: $nb-muted-text;
+    content-align: right middle;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+
+#support_button,
+#close_tui_button,
+#dev_close_button {
+    height: 3;
+    min-height: 2;
+}
+
+#support_button {
+    width: 24;
+    height: 3;
+    min-height: 2;
+    margin-left: 1;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: $nb-muted-text;
+    text-style: dim;
+    content-align: center middle;
+}
+
+SupportModal {
+    align: center middle;
+    background: $background 65%;
+}
+
+ModalScreen:ansi {
+    background: $background 65%;
+    color: $foreground;
+}
+
+SupportModal:ansi {
+    align: center middle;
+    background: $background 65%;
+    color: $foreground;
+}
+
+#support_modal_dialog {
+    width: 58;
+    max-width: 80%;
+    height: auto;
+    padding: 1 2;
+    background: $surface;
+    border: tall $nb-border-subtle;
+}
+
+#support_modal_dialog:ansi {
+    background: $surface;
+    border: tall $nb-border-subtle;
+}
+
+#support_modal_title {
+    color: $primary;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#support_modal_copy {
+    color: $foreground;
+    margin-bottom: 1;
+}
+
+#support_modal_url {
+    width: 1fr;
+    color: $nb-muted-text;
+    text-style: dim;
+    margin-bottom: 1;
+}
+
+#support_modal_url_row {
+    width: 1fr;
+    height: auto;
+    margin-bottom: 1;
+    align: left middle;
+}
+
+#support_modal_copy_url {
+    margin-left: 1;
+    min-width: 8;
+}
+
+#support_modal_actions {
+    width: 1fr;
+    height: auto;
+    align: right middle;
+}
+
+#support_modal_actions:ansi {
+    background: transparent;
+}
+
+#support_modal_open {
+    background: $panel;
+    border: round $primary;
+    color: $primary;
+    tint: transparent;
+    text-style: bold;
+}
+
+#support_modal_open:hover {
+    background: $panel;
+    border: round $primary;
+    color: $primary;
+    tint: transparent;
+    background-tint: transparent;
+    text-style: bold;
+}
+
+#support_modal_open:focus {
+    background: $panel;
+    border: round $primary;
+    color: $primary;
+    tint: transparent;
+    background-tint: transparent;
+    text-style: bold;
+}
+
+#support_modal_open.-active {
+    background: $panel;
+    border: round $primary;
+    color: $primary;
+    tint: transparent;
+    background-tint: transparent;
+    text-style: bold;
+}
+
+#support_modal_open:ansi,
+#support_modal_open:ansi:hover,
+#support_modal_open:ansi:focus,
+#support_modal_open:ansi.-active {
+    background: $panel;
+    border: round $primary;
+    color: $primary;
+    tint: transparent;
+    background-tint: transparent;
+    text-style: bold;
+}
+
+#theme_select SelectCurrent:focus,
+#dev_theme_select SelectCurrent:focus,
+#view_select SelectCurrent:focus,
+#dev_view_select SelectCurrent:focus {
+    border: tall $primary;
+    background: $panel;
+}
+
+#theme_select SelectCurrent Static#label,
+#dev_theme_select SelectCurrent Static#label,
+#view_select SelectCurrent Static#label,
+#dev_view_select SelectCurrent Static#label {
+    color: $foreground 70%;
+}
+
+#theme_select SelectCurrent.-has-value Static#label,
+#dev_theme_select SelectCurrent.-has-value Static#label,
+#view_select SelectCurrent.-has-value Static#label,
+#dev_view_select SelectCurrent.-has-value Static#label {
+    color: $foreground;
+}
+
+#theme_select SelectCurrent .arrow,
+#dev_theme_select SelectCurrent .arrow,
+#view_select SelectCurrent .arrow,
+#dev_view_select SelectCurrent .arrow {
+    color: $foreground 55%;
+}
+
+#theme_select SelectOverlay,
+#dev_theme_select SelectOverlay,
+#view_select SelectOverlay,
+#dev_view_select SelectOverlay,
+OptionList {
+    background: $background;
+    color: $foreground;
+    border: tall $nb-border-subtle;
+}
+
+#theme_select SelectOverlay,
+#dev_theme_select SelectOverlay,
+#view_select SelectOverlay,
+#dev_view_select SelectOverlay {
+    min-width: 20;
+    width: 20;
+}
+
+#theme_select SelectOverlay:focus,
+#dev_theme_select SelectOverlay:focus,
+#view_select SelectOverlay:focus,
+#dev_view_select SelectOverlay:focus,
+OptionList:focus {
+    border: tall $primary;
+    background-tint: $foreground 5%;
+}
+
+OptionList:ansi:focus {
+    border: tall $primary;
+    background-tint: $foreground 5%;
+}
+
+#theme_select SelectOverlay > .option-list--option-highlighted,
+#dev_theme_select SelectOverlay > .option-list--option-highlighted,
+#view_select SelectOverlay > .option-list--option-highlighted,
+#dev_view_select SelectOverlay > .option-list--option-highlighted,
+OptionList > .option-list--option-highlighted {
+    color: $foreground;
+    background: $panel;
+    text-style: bold;
+}
+
+#theme_select SelectOverlay > .option-list--option-hover,
+#dev_theme_select SelectOverlay > .option-list--option-hover,
+#view_select SelectOverlay > .option-list--option-hover,
+#dev_view_select SelectOverlay > .option-list--option-hover,
+OptionList > .option-list--option-hover {
+    background: $panel;
+}
+
+#theme_select SelectOverlay > .option-list--option-disabled,
+#dev_theme_select SelectOverlay > .option-list--option-disabled,
+#view_select SelectOverlay > .option-list--option-disabled,
+#dev_view_select SelectOverlay > .option-list--option-disabled,
+OptionList > .option-list--option-disabled {
+    color: $nb-muted-text;
+}
+
+OptionList > .option-list--separator {
+    color: $nb-border-subtle;
+}
+
+Input {
+    color: $foreground;
+    border: tall $nb-border-subtle;
+}
+
+Input:focus {
+    border: tall $primary;
+}
+
+Input > .input--cursor {
+    background: $foreground;
+    color: $background;
+    text-style: bold;
+}
+
+Input > .input--selection {
+    background: $primary 35%;
+    color: $foreground;
+}
+
+Input > .input--placeholder,
+Input > .input--suggestion {
+    color: $nb-muted-text;
+}
+
+Input.-invalid {
+    border: tall $error 60%;
+}
+
+Input.-invalid:focus {
+    border: tall $error;
+}
+
+SelectCurrent:ansi {
+    border: tall $nb-border-subtle;
+    color: $foreground;
+    background: $surface;
+}
+
+SelectCurrent:ansi Static#label {
+    color: $nb-muted-text;
+    background: transparent;
+}
+
+SelectCurrent:ansi.-has-value Static#label {
+    color: $foreground;
+}
+
+SelectCurrent:ansi .arrow {
+    color: $nb-muted-text;
+    background: transparent;
+}
+
+SelectOverlay:ansi {
+    color: $foreground;
+    border: tall $nb-border-subtle;
+    background: $background;
+}
+
+SelectOverlay:ansi > .option-list--option-highlighted {
+    color: $foreground;
+    background: $panel;
+    text-style: bold;
+}
+
+SelectOverlay:ansi > .option-list--option-hover {
+    background: $panel;
+}
+
+SelectOverlay:ansi > .option-list--option-disabled {
+    color: $nb-muted-text;
+}
+
+OptionList:ansi {
+    background: $background;
+    color: $foreground;
+    border: tall $nb-border-subtle;
+}
+
+OptionList:ansi > .option-list--option-highlighted {
+    color: $foreground;
+    background: $panel;
+    text-style: bold;
+}
+
+OptionList:ansi > .option-list--option-hover {
+    background: $panel;
+}
+
+OptionList:ansi > .option-list--option-disabled {
+    color: $nb-muted-text;
+}
+
+OptionList:ansi > .option-list--separator {
+    color: $nb-border-subtle;
+}
+
+Input:ansi {
+    color: $foreground;
+    border: tall $nb-border-subtle;
+    background: $surface;
+}
+
+Input:ansi > .input--cursor {
+    background: $foreground;
+    color: $background;
+    text-style: bold;
+}
+
+Input:ansi > .input--selection {
+    background: transparent;
+    color: $foreground;
+    text-style: reverse;
+}
+
+Input:ansi > .input--placeholder,
+Input:ansi > .input--suggestion {
+    color: $nb-muted-text;
+    text-style: dim;
+}
+
+TextArea {
+    color: $foreground;
+    border: tall $nb-border-subtle;
+    background: $surface;
+}
+
+TextArea:focus {
+    border: tall $primary;
+}
+
+TextArea .text-area--cursor {
+    background: $foreground;
+    color: $background;
+    text-style: bold;
+}
+
+TextArea.-read-only .text-area--cursor {
+    background: $panel;
+    color: $foreground;
+}
+
+TextArea .text-area--gutter {
+    background: $background;
+    color: $nb-muted-text;
+}
+
+TextArea .text-area--cursor-gutter,
+TextArea .text-area--cursor-line {
+    background: $panel;
+    color: $foreground;
+}
+
+TextArea .text-area--selection {
+    background: $primary 35%;
+    color: $foreground;
+}
+
+TextArea .text-area--matching-bracket {
+    background: $foreground 20%;
+    color: $foreground;
+}
+
+TextArea .text-area--suggestion,
+TextArea .text-area--placeholder {
+    color: $nb-muted-text;
+}
+
+TextArea:ansi {
+    color: $foreground;
+    border: tall $nb-border-subtle;
+    background: $surface;
+}
+
+TextArea:ansi:focus {
+    border: tall $primary;
+}
+
+TextArea:ansi .text-area--cursor {
+    background: $foreground;
+    color: $background;
+    text-style: bold;
+}
+
+TextArea:ansi.-read-only .text-area--cursor {
+    background: $panel;
+    color: $foreground;
+}
+
+TextArea:ansi .text-area--gutter {
+    background: $background;
+    color: $nb-muted-text;
+}
+
+TextArea:ansi .text-area--cursor-gutter,
+TextArea:ansi .text-area--cursor-line {
+    background: $panel;
+    color: $foreground;
+}
+
+TextArea:ansi .text-area--selection {
+    background: transparent;
+    color: $foreground;
+    text-style: reverse;
+}
+
+TextArea:ansi .text-area--matching-bracket {
+    background: $foreground 20%;
+    color: $foreground;
+}
+
+TextArea:ansi .text-area--suggestion,
+TextArea:ansi .text-area--placeholder {
+    color: $nb-muted-text;
+    text-style: dim;
+}
+
+#query_bar,
+#dev_request_bar {
+    width: 1fr;
+    height: auto;
+    padding: 0 1 1 1;
+    background: $background;
+    border-bottom: solid $nb-border-subtle;
+}
+
+#query_bar {
+    align: left middle;
+}
+
+#shell,
+#dev_shell {
+    height: 1fr;
+    background: $background;
+}
+
+#sidebar,
+#dev_sidebar {
+    background: $background;
+    border-right: tall $nb-border-subtle;
+    overflow: hidden scroll;
+    scrollbar-size: 0 0;
+}
+
+#nav_title,
+#dev_sidebar_title,
+.panel-title {
+    color: $primary;
+    text-style: bold;
+}
+
+.panel-subtitle {
+    color: $nb-muted-text;
+    text-style: italic;
+}
+
+#nav_help,
+#dev_help {
+    color: $nb-muted-text;
+}
+
+ListView {
+    background: $surface;
+    color: $foreground;
+}
+
+ListView > ListItem {
+    background: transparent;
+    color: $foreground;
+    border: tall transparent;
+}
+
+ListView > ListItem.-hovered {
+    background: $panel;
+    color: $foreground;
+}
+
+ListView > ListItem.-highlight {
+    background: $panel;
+    color: $foreground;
+    border: tall transparent;
+    text-style: bold;
+}
+
+ListView:focus {
+    background-tint: transparent;
+}
+
+ListView:focus > ListItem.-highlight {
+    background: $panel;
+    color: $foreground;
+    text-style: bold;
+}
+
+ListView:ansi {
+    background: $surface;
+    color: $foreground;
+}
+
+ListView:ansi > ListItem {
+    background: transparent;
+    color: $foreground;
+}
+
+ListView:ansi > ListItem.-hovered,
+ListView:ansi > ListItem.-highlight,
+ListView:ansi:focus > ListItem.-highlight {
+    background: $panel;
+    color: $foreground;
+    text-style: bold;
+}
+
+#nav_tree,
+#dev_nav_tree {
+    height: 1fr;
+    background: transparent;
+    color: $foreground;
+}
+
+#nav_tree > .tree--label,
+#dev_nav_tree > .tree--label {
+    color: $foreground;
+}
+
+#nav_tree > .tree--guides,
+#nav_tree > .tree--guides-hover,
+#dev_nav_tree > .tree--guides,
+#dev_nav_tree > .tree--guides-hover {
+    color: $nb-border-subtle;
+}
+
+#nav_tree > .tree--guides-selected,
+#dev_nav_tree > .tree--guides-selected {
+    color: $primary;
+}
+
+#nav_tree > .tree--cursor,
+#nav_tree > .tree--highlight-line,
+#nav_tree > .tree--highlight,
+#dev_nav_tree > .tree--cursor,
+#dev_nav_tree > .tree--highlight-line,
+#dev_nav_tree > .tree--highlight {
+    background: $panel;
+    color: $foreground;
+}
+
+#nav_tree > .tree--cursor,
+#dev_nav_tree > .tree--cursor {
+    text-style: bold;
+}
+
+Tree:focus {
+    background-tint: transparent;
+}
+
+Tree:focus > .tree--guides,
+Tree:focus > .tree--guides-hover {
+    color: $nb-border-subtle;
+}
+
+Tree:focus > .tree--guides-selected {
+    color: $primary;
+}
+
+Tree:focus > .tree--cursor,
+Tree:focus > .tree--highlight-line,
+Tree:focus > .tree--highlight {
+    background: $panel;
+    color: $foreground;
+}
+
+Tree:ansi {
+    background: transparent;
+    color: $foreground;
+}
+
+Tree:ansi > .tree--label {
+    color: $foreground;
+}
+
+Tree:ansi > .tree--guides,
+Tree:ansi > .tree--guides-hover {
+    color: $nb-border-subtle;
+}
+
+Tree:ansi > .tree--guides-selected {
+    color: $primary;
+}
+
+Tree:ansi > .tree--cursor,
+Tree:ansi > .tree--highlight-line,
+Tree:ansi > .tree--highlight {
+    background: $panel;
+    color: $foreground;
+}
+
+TabbedContent,
+TabbedContent:ansi {
+    background: $surface;
+}
+
+Tabs,
+Tabs:ansi {
+    background: transparent;
+}
+
+Tabs > #tabs-scroll,
+Tabs #tabs-list-bar,
+Tabs #tabs-list,
+Tabs Underline {
+    background: transparent;
+}
+
+Tabs .underline--bar {
+    color: $nb-border-subtle;
+    background: $nb-border-subtle;
+}
+
+Tabs:focus .underline--bar {
+    color: $primary;
+    background: $primary 35%;
+}
+
+Tabs Tab,
+Tabs ContentTab {
+    height: 1;
+    min-width: 9;
+    padding: 0 1;
+    background: transparent;
+    color: $nb-muted-text;
+    border: none;
+}
+
+Tabs Tab:hover,
+Tabs ContentTab:hover {
+    background: $panel;
+    color: $foreground;
+}
+
+Tabs Tab:focus,
+Tabs ContentTab:focus {
+    background: $panel;
+    color: $foreground;
+    text-style: bold;
+}
+
+Tabs Tab.-active,
+Tabs ContentTab.-active {
+    color: $foreground;
+    background: transparent;
+    text-style: bold;
+}
+
+Tabs:focus Tab.-active,
+Tabs:focus ContentTab.-active {
+    color: $primary;
+    background: transparent;
+    text-style: bold;
+}
+
+Tabs:ansi Tab,
+Tabs:ansi ContentTab {
+    background: transparent;
+    color: $nb-muted-text;
+    text-style: dim;
+}
+
+Tabs:ansi Tab.-active,
+Tabs:ansi ContentTab.-active {
+    color: $foreground;
+    background: transparent;
+    text-style: bold not dim;
+}
+
+Tabs:ansi:focus Tab.-active,
+Tabs:ansi:focus ContentTab.-active {
+    color: $primary;
+    background: transparent;
+    text-style: bold not dim;
+}
+
+Tabs:ansi .underline--bar {
+    color: $nb-border-subtle;
+    background: transparent;
+}
+
+Tabs:ansi:focus .underline--bar {
+    color: $primary;
+    background: transparent;
+}
+
+ContentTabs,
+ContentTabs:ansi {
+    background: transparent;
+}
+
+ContentSwitcher,
+ContentSwitcher:ansi {
+    background: $surface;
+}
+
+TabPane,
+TabPane:ansi {
+    background: $surface;
+    padding: 0;
+}
+
+TabPane.-active,
+TabPane.-active:ansi {
+    background: $surface;
+}
+
+ToastRack,
+ToastHolder {
+    background: transparent;
+}
+
+Toast {
+    background: $panel;
+    color: $foreground;
+    border-left: outer $primary;
+    link-color: $primary;
+    background: $panel;
+    color: $foreground;
+}
+
+.toast--title {
+    color: $primary;
+    text-style: bold;
+}
+
+Toast.-information {
+    border-left: outer $primary;
+}
+
+.toast--title,
+Toast.-information .toast--title {
+    color: $primary;
+}
+
+Toast.-warning {
+    border-left: outer $warning;
+}
+
+Toast.-warning .toast--title {
+    color: $warning;
+}
+
+Toast.-error {
+    border-left: outer $error;
+}
+
+Toast.-error .toast--title {
+    color: $error;
+}
+
+Toast:ansi {
+    background: $panel;
+    color: $foreground;
+    border-left: outer $primary;
+    link-color: $primary;
+}
+
+Toast:ansi .toast--title,
+Toast:ansi.-information .toast--title {
+    color: $primary;
+    text-style: bold;
+}
+
+Toast:ansi.-warning {
+    border-left: outer $warning;
+}
+
+Toast:ansi.-warning .toast--title {
+    color: $warning;
+}
+
+Toast:ansi.-error {
+    border-left: outer $error;
+}
+
+Toast:ansi.-error .toast--title {
+    color: $error;
+}
+
+DataTable:focus {
+    background-tint: transparent;
+}
+
+DataTable:focus > .datatable--header {
+    background: $panel;
+    color: $foreground;
+}
+
+DataTable:focus > .datatable--cursor,
+DataTable:focus > .datatable--fixed-cursor,
+DataTable:focus > .datatable--header-cursor {
+    background: $panel;
+    color: $foreground;
+    text-style: bold;
+}
+
+DataTable:ansi {
+    background: $surface;
+    color: $foreground;
+}
+
+DataTable:ansi > .datatable--header {
+    background: $panel;
+    color: $foreground;
+}
+
+DataTable:ansi > .datatable--fixed {
+    color: $foreground;
+}
+
+DataTable:ansi > .datatable--cursor,
+DataTable:ansi > .datatable--fixed-cursor,
+DataTable:ansi > .datatable--header-cursor {
+    background: $panel;
+    color: $foreground;
+}
+
+Footer {
+    background: $background;
+    color: $foreground;
+}
+
+FooterKey {
+    background: transparent;
+    color: $foreground;
+}
+
+FooterKey:hover {
+    background: $panel;
+}
+
+FooterKey.-disabled {
+    color: $nb-muted-text;
+}
+
+FooterKey .footer-key--key {
+    background: $panel;
+    color: $primary;
+}
+
+FooterKey .footer-key--description {
+    background: transparent;
+    color: $foreground;
+}
+
+FooterKey.-compact .footer-key--key,
+FooterKey.-compact .footer-key--description {
+    background: transparent;
+}
+
+FooterLabel {
+    color: $nb-muted-text;
+    background: transparent;
+}
+
+FooterKey.-command-palette {
+    border-left: vkey $nb-border-subtle;
+}
+
+Footer:ansi {
+    background: $background;
+    color: $foreground;
+}
+
+Footer:ansi FooterKey {
+    background: transparent;
+    color: $foreground;
+}
+
+Footer:ansi FooterKey:hover {
+    background: $panel;
+    text-style: none;
+}
+
+Footer:ansi .footer-key--key {
+    background: $panel;
+    color: $primary;
+}
+
+Footer:ansi .footer-key--description,
+Footer:ansi FooterLabel {
+    background: transparent;
+    color: $foreground;
+}

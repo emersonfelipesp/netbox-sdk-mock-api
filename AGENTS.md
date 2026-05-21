@@ -1,0 +1,52 @@
+# AGENTS.md — netbox-sdk Agent Index
+
+## Workspace Context
+
+This file lives at `/root/personal-context/nmulticloud-context/netbox-cli/AGENTS.md` inside the `personal-context` workspace.
+Workspace guidance: `/root/personal-context/CLAUDE.md`.
+Per-repo deep-dive: `/root/personal-context/claude-reference/netbox-cli.md`.
+Submodule layout and cross-repo links: `/root/personal-context/claude-reference/dependency-map.md`.
+
+---
+
+## Quick Start
+
+| What you need | Go here |
+|---|---|
+| Architecture overview | [CLAUDE.md](CLAUDE.md) |
+| SDK package details | [netbox_sdk/CLAUDE.md](netbox_sdk/CLAUDE.md) |
+| CLI package details | [netbox_cli/CLAUDE.md](netbox_cli/CLAUDE.md) |
+| TUI package details | [netbox_tui/CLAUDE.md](netbox_tui/CLAUDE.md) |
+| Docs build details | [docs/CLAUDE.md](docs/CLAUDE.md) |
+| CI workflow details | [.github/CLAUDE.md](.github/CLAUDE.md) |
+
+## CLAUDE.md Index
+
+Read the nearest scoped guide for the code you are changing.
+
+- [.github/CLAUDE.md](.github/CLAUDE.md)
+- [CLAUDE.md](CLAUDE.md)
+- [docs/CLAUDE.md](docs/CLAUDE.md)
+- [netbox_cli/CLAUDE.md](netbox_cli/CLAUDE.md)
+- [netbox_cli/reference/CLAUDE.md](netbox_cli/reference/CLAUDE.md)
+- [netbox_sdk/CLAUDE.md](netbox_sdk/CLAUDE.md)
+- [netbox_sdk/reference/CLAUDE.md](netbox_sdk/reference/CLAUDE.md)
+- [netbox_tui/CLAUDE.md](netbox_tui/CLAUDE.md)
+- [netbox_tui/themes/CLAUDE.md](netbox_tui/themes/CLAUDE.md)
+- [reference/CLAUDE.md](reference/CLAUDE.md)
+- [reference/textual/CLAUDE.md](reference/textual/CLAUDE.md)
+- [tests/CLAUDE.md](tests/CLAUDE.md)
+## Package Snapshot
+
+```
+netbox_sdk/   core install
+netbox_cli/   optional cli extra
+netbox_tui/   optional tui extra
+```
+
+Rules:
+1. Read the local `CLAUDE.md` before editing in that area.
+2. Preserve package boundaries: SDK independent, CLI lazy-loads TUI, TUI depends on SDK.
+3. Use absolute imports only.
+4. Run the owning package suite (`uv run pytest -m suite_sdk|suite_cli|suite_tui`) for package-local changes, and `uv run pytest` for shared/main/release validation paths.
+5. When merging `main` into a version branch (e.g. `v0.0.7.post1`), **`main` wins on conflicts** — use `git checkout --theirs` for conflicted paths after `git merge origin/main` on that branch. See [CLAUDE.md § Release Process](CLAUDE.md#release-process).

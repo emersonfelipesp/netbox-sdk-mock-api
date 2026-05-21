@@ -1,0 +1,55 @@
+name: Build and deploy documentation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    name: Build MkDocs and deploy to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install docs and runtime dependencies
+        run: uv sync --locked --group docs --group dev --extra cli --extra tui --extra demo
+
+      - name: Regenerate command capture docs
+        env:
+          DEMO_USERNAME: ${{ secrets.DEMO_USERNAME }}
+          DEMO_PASSWORD: ${{ secrets.DEMO_PASSWORD }}
+        run: |
+          if [ -z "$DEMO_USERNAME" ] || [ -z "$DEMO_PASSWORD" ]; then
+            echo "Demo secrets not configured — skipping docgen."
+            exit 0
+          fi
+          uv run playwright install chromium --with-deps
+          uv run nbx demo init --username "$DEMO_USERNAME" --password "$DEMO_PASSWORD" --headless
+          uv run nbx docs generate-capture
+
+      - name: Configure git identity for gh-deploy
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Build and deploy docs to GitHub Pages
+        run: uv run mkdocs gh-deploy --force --clean --verbose

@@ -1,0 +1,68 @@
+name: Build Django Model Graphs
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build last 3 NetBox releases
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install netbox-sdk tool from PyPI
+        run: uv tool install --force netbox-sdk[cli]
+
+      - name: Get last 3 NetBox release tags
+        id: releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAGS=$(gh api repos/netbox-community/netbox/releases --paginate --jq '.[0:3] | .[].tag_name')
+          echo "tags<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$TAGS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Build model graphs
+        env:
+          TAGS: ${{ steps.releases.outputs.tags }}
+        run: |
+          mkdir -p django_models_builds
+          while IFS= read -r TAG; do
+            [ -z "$TAG" ] && continue
+            CHECKOUT_DIR="/tmp/netbox-${TAG}"
+            git clone --depth 1 --branch "$TAG" https://github.com/netbox-community/netbox.git "$CHECKOUT_DIR"
+            ~/.local/bin/nbx dev django-model build --rebuild \
+              --netbox-root "$CHECKOUT_DIR/netbox/" \
+              --cache-path "django_models_builds/${TAG}-django-models-build.json"
+            rm -rf "$CHECKOUT_DIR"
+          done <<< "$TAGS"
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add django_models_builds/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "build(django-models): update last 3 NetBox releases"
+            git push
+          fi
