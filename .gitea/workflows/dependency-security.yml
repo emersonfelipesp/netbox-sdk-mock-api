@@ -1,0 +1,68 @@
+name: Dependency security
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  HOME: ${{ runner.temp }}/netbox-sdk-${{ gitea.run_id }}-${{ gitea.run_attempt }}/home
+  TMPDIR: ${{ runner.temp }}/netbox-sdk-${{ gitea.run_id }}-${{ gitea.run_attempt }}/tmp
+  UV_CACHE_DIR: ${{ runner.temp }}/netbox-sdk-${{ gitea.run_id }}-${{ gitea.run_attempt }}/uv-cache
+  UV_PYTHON_DOWNLOADS: never
+
+jobs:
+  dependency-security:
+    name: dependency security / Python 3.12
+    runs-on: ci-untrusted-python312
+    steps:
+      - name: Checkout repository
+        # yamllint disable-line rule:line-length
+        uses: https://git.nmulti.cloud/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Sync the frozen dependency graph
+        run: |
+          set -eu
+          mkdir -p "$HOME" "$TMPDIR" "$UV_CACHE_DIR"
+          python3.12 --version
+          uv --version
+          uv sync --python 3.12 --frozen --all-extras --all-groups
+
+      - name: Validate the dependency-security contract
+        run: uv run pytest -q -p no:randomly tests/test_dependency_security.py
+
+      - name: Audit every installable dependency path
+        run: |
+          set -eu
+          uv export --frozen --all-extras --all-groups \
+            --no-hashes --no-emit-project \
+            --output-file "$TMPDIR/audit-requirements.txt"
+          uvx --from pip-audit==2.10.1 \
+            pip-audit -r "$TMPDIR/audit-requirements.txt"
+
+      - name: Run static checks
+        run: |
+          set -eu
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run ty check netbox_sdk netbox_cli netbox_tui tests \
+            --output-format concise
+
+      - name: Run the full test suite
+        run: uv run pytest -p no:randomly
+
+      - name: Build strict documentation
+        run: uv run mkdocs build --strict
+
+      - name: Build and validate distributions
+        run: |
+          set -eu
+          uv build
+          uvx --from twine==6.2.0 twine check dist/*

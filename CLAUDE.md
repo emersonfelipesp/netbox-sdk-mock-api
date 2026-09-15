@@ -91,6 +91,12 @@ uv run pytest -m suite_cli
 uv run pytest -m suite_tui
 ```
 
+Dependency-security changes must update both docs installation paths in
+`pyproject.toml`, regenerate `uv.lock` with `uv`, and pass
+`tests/test_dependency_security.py`. Audit the complete graph exported with
+`uv export --frozen --all-extras --all-groups --no-hashes --no-emit-project`;
+never hand-edit `uv.lock` or weaken a security floor to satisfy resolution.
+
 If you need a minimal install boundary check:
 
 ```bash

@@ -50,3 +50,11 @@ Rules:
 3. Use absolute imports only.
 4. Run the owning package suite (`uv run pytest -m suite_sdk|suite_cli|suite_tui`) for package-local changes, and `uv run pytest` for shared/main/release validation paths.
 5. When merging `main` into a version branch (e.g. `v0.0.7.post1`), **`main` wins on conflicts** — use `git checkout --theirs` for conflicted paths after `git merge origin/main` on that branch. See [CLAUDE.md § Release Process](CLAUDE.md#release-process).
+
+## Dependency Security
+
+Keep both docs installation paths in `pyproject.toml` aligned, regenerate
+`uv.lock` with `uv`, and run `tests/test_dependency_security.py`. Audit the
+complete graph exported with
+`uv export --frozen --all-extras --all-groups --no-hashes --no-emit-project`;
+never hand-edit `uv.lock` or weaken a security floor to satisfy resolution.

@@ -58,6 +58,7 @@ The default `pytest` invocation still means “test everything”. Marker runs a
 | `test_demo_cli.py` | Demo profile CLI commands; live API calls when `DEMO_USERNAME`/`DEMO_PASSWORD` are set |
 | `test_http_ssl.py` | TLS failure detection, `connector_for_config`, `NETBOX_SSL_VERIFY`, `ssl_verify` save/load |
 | `test_demo_runtime_refresh.py` | Demo profile config cache invalidation and runtime refresh behavior |
+| `test_dependency_security.py` | Docs dependency floor alignment, stable lock versions, canonical provenance, and archive hashes |
 | `test_dev_tui.py` | `NetBoxDevTuiApp` Pilot tests: request workbench layout, textarea/input theme tokens, support modal, theme switching |
 | `test_django_model_tui.py` | `DjangoModelTuiApp` instantiation and basic layout verification |
 | `test_docgen_paths.py` | `docgen_capture.py` output path resolution and stub config injection |
