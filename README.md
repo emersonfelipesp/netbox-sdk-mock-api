@@ -112,6 +112,21 @@ uv run ty check netbox_sdk netbox_cli netbox_tui tests
 uv run pytest
 ```
 
+Dependency updates must keep both docs requirements in `pyproject.toml` aligned with
+`uv.lock`. Validate the complete installable graph with:
+
+```bash
+mkdir -p .tmp
+uv sync --frozen --all-extras --all-groups
+uv run pytest tests/test_dependency_security.py
+uv export --frozen --all-extras --all-groups --no-hashes --no-emit-project \
+  --output-file .tmp/audit-requirements.txt
+uvx --from pip-audit==2.10.1 pip-audit -r .tmp/audit-requirements.txt
+```
+
+See [Dependency security](docs/developer/dependency-security.md) for the update and
+verification contract.
+
 ## Release Process
 
 Use a single GitHub release title pattern for every release:

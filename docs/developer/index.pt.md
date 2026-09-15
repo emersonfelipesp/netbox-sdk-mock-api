@@ -9,3 +9,4 @@ Documentação técnica para contribuidores e quem constrói em cima do `netbox-
 - [Princípios de design](design-principles.md) — convenções alinhadas a SOLID para este repositório
 - [Padrão de composição Textual](textual-composition.md) — diretriz de composição estilo React para widgets Textual
 - [Geração de documentação](docgen.md) — sistema de captura de comandos e fluxo de CI
+- [Segurança de dependências](dependency-security.md) — manifestos, regeneração do lock, escopo da auditoria e gates de entrega
