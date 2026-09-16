@@ -16,7 +16,7 @@ django_model_app = typer.Typer(
     help="Inspect NetBox Django models: parse, cache, and visualize relationships.",
 )
 
-_DEFAULT_NETBOX_ROOT = Path("/root/nms/netbox/netbox/")
+_DEFAULT_NETBOX_ROOT = Path("netbox")
 
 
 @django_model_app.command("build")
@@ -110,6 +110,7 @@ def django_model_tui(
 
     run_django_model_tui(
         store=store,
+        netbox_root=netbox_root,
         theme_name=theme,
         client_factory=_get_client,
         index_factory=_get_index,

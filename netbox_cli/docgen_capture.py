@@ -19,9 +19,7 @@ Documentation guidelines (AGENTS):
 from __future__ import annotations
 
 import json
-import os
 import sys
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import TextIO
 
@@ -177,17 +175,18 @@ def _repo_root() -> Path:
 
 
 def _build_meta(markdown_output: bool) -> dict:
-    from netbox_sdk.config import DEMO_BASE_URL, load_profile_config  # noqa: PLC0415
+    from netbox_sdk.config import DEMO_BASE_URL  # noqa: PLC0415
 
     profile = "demo"
-    cfg = load_profile_config(profile)
-    effective_url = cfg.base_url or DEMO_BASE_URL
     return {
-        "generated_at": datetime.now(UTC).isoformat(),
+        "generated_at": "reproducible-build",
         "profile": profile,
-        "netbox_url": effective_url,
-        "timeout": os.environ.get("NBX_DOC_CAPTURE_TIMEOUT", "30"),
-        "token_configured": bool(cfg.token_key and cfg.token_secret),
+        "netbox_url": DEMO_BASE_URL,
+        # Capture timeout is an execution detail, not committed documentation.
+        "timeout": "30",
+        # Generated documentation must not vary with, or disclose, the
+        # credential state of the machine that produced it.
+        "token_configured": False,
         "markdown_output": markdown_output,
     }
 
@@ -261,9 +260,7 @@ def _render_markdown_capture(
         lines.append(cmd_display)
         lines.append("```")
         lines.append("")
-        lines.append(
-            f"**Exit code:** `{r.exit_code}`  \u00b7  **Wall time (s):** `{r.elapsed_seconds:.3f}`"
-        )
+        lines.append(f"**Exit code:** `{r.exit_code}`")
         lines.append("")
         lines.append("**Output:**")
         lines.append("")
@@ -346,10 +343,7 @@ def _render_markdown_capture_pt(
         lines.append(cmd_display)
         lines.append("```")
         lines.append("")
-        lines.append(
-            f"**Código de saída:** `{r.exit_code}`  ·  **Tempo de parede (s):** "
-            f"`{r.elapsed_seconds:.3f}`"
-        )
+        lines.append(f"**Código de saída:** `{r.exit_code}`")
         lines.append("")
         lines.append("**Saída:**")
         lines.append("")

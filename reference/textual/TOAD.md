@@ -429,15 +429,15 @@ That guide covers:
 
 ---
 
-## Lessons for NMS-CLI
+## Lessons for terminal SDK clients
 
 | Pattern | How Toad Does It | Applicability |
 |---------|------------------|--------------|
-| Real PTY shell integration | PTY subprocess, persistent env/cwd | Embed a real shell in NMS TUI |
+| Real PTY shell integration | PTY subprocess, persistent env/cwd | Embed a real shell in a TUI |
 | Protocol-based agent connections | ACP standard | Protocol-based device adapters |
 | Streaming output rendering | Incremental Markdown renderer | Streaming command output display |
-| Session persistence & resume | `Ctrl+R` session restore | Save/restore NMS sessions |
-| Web mode | `toad serve` via Textual web | Remote access to NMS TUI via browser |
-| File picker with `@` | Fuzzy picker + tree view | Config/log file selector in NMS |
+| Session persistence & resume | `Ctrl+R` session restore | Save and restore sessions |
+| Web mode | `toad serve` via Textual web | Remote TUI access through a browser |
+| File picker with `@` | Fuzzy picker + tree view | Configuration and log file selection |
 | Concurrent agent sessions | Multi-pane simultaneous agents | Multi-device simultaneous sessions |
-| In-TUI settings | No JSON editing needed | Settings modal in NMS-CLI |
+| In-TUI settings | No JSON editing needed | Settings modal in a terminal client |
