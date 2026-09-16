@@ -10,12 +10,9 @@ This file mirrors the sibling `CLAUDE.md` guidance for agents that read `AGENTS.
 
 # Textual Project Reference — netbox-sdk Guide
 
-## Workspace Context
+## Repository Context
 
-This file lives at `/root/personal-context/nmulticloud-context/netbox-cli/reference/textual/CLAUDE.md` inside the `personal-context` workspace.
-Workspace guidance: `/root/personal-context/CLAUDE.md`.
-Per-repo deep-dive: `/root/personal-context/claude-reference/netbox-cli.md`.
-Submodule layout and cross-repo links: `/root/personal-context/claude-reference/dependency-map.md`.
+This guide is part of the public `netbox-sdk` repository. Use the nearest scoped `CLAUDE.md` or `AGENTS.md` for the files you are changing.
 
 ---
 
@@ -27,7 +24,6 @@ This directory contains comprehensive reference guides for notable open-source p
 
 | Guide | Project | Author | Stars | Category |
 |-------|---------|--------|-------|----------|
-| [NMS-CLI.md](NMS-CLI.md) | nms-cli | Local project | n/a | NMS operations CLI + Textual console |
 | [DOLPHIE.md](DOLPHIE.md) | [Dolphie](https://github.com/charles-001/dolphie) | charles-001 | ~1,130 | Database monitoring TUI |
 | [MEMRAY.md](MEMRAY.md) | [Memray](https://github.com/bloomberg/memray) | Bloomberg | ~14,950 | Memory profiler + Textual live mode |
 | [POSTING.md](POSTING.md) | [Posting](https://github.com/darrenburns/posting) | Darren Burns | ~11,589 | HTTP client TUI |
@@ -46,55 +42,54 @@ These references cover the major patterns you'll encounter when building the `ne
 - **Keyboard-first productivity tools** with jump mode, command palette → Posting
 - **Real PTY shell integration + streaming output** → Toad
 - **Large-file and streaming data viewers** → Toolong
-- **In-repo production Typer+Textual architecture** → NMS-CLI
 
 ---
 
-## Cross-Project Patterns for NMS-CLI
+## Cross-Project Patterns for terminal SDK client
 
 ### 1. Multi-tab Layout (Dolphie, Toolong)
-Both Dolphie and Toolong open multiple targets (hosts/files) as tabs. For NMS-CLI:
+Both Dolphie and Toolong open multiple targets (hosts/files) as tabs. For a terminal SDK client:
 - One tab per monitored device
 - Color-coded tabs per device type or group
 
 ### 2. YAML-Based Config Storage (Posting)
-Posting stores every HTTP request as a plain YAML file. NMS-CLI should store:
+Posting stores every HTTP request as a plain YAML file. A terminal SDK client should store:
 - Device inventories as YAML
 - Named connection profiles as YAML
 - Templates and playbooks as YAML
 All committed alongside infrastructure code in VCS.
 
 ### 3. Environments & Variable Substitution (Posting)
-Named environments (dev/staging/prod) with variable substitution in URLs/commands maps directly to NMS-CLI's multi-site/multi-environment use case.
+Named environments (dev/staging/prod) with variable substitution in URLs/commands maps directly to A terminal SDK client's multi-site/multi-environment use case.
 
 ### 4. Record & Replay (Dolphie)
-Dolphie records sessions to SQLite + ZSTD for forensic replay. NMS-CLI should support:
+Dolphie records sessions to SQLite + ZSTD for forensic replay. A terminal SDK client should support:
 - Session recording for audit trails
 - Replay for incident post-mortems
 - ZSTD compression to keep files small
 
 ### 5. Daemon / Headless Mode (Dolphie)
-Dolphie runs as a background `systemctl` service for recording. NMS-CLI's collector should:
+Dolphie runs as a background `systemctl` service for recording. A terminal SDK collector should:
 - Run headlessly without the TUI
 - Write structured logs
 - Integrate with systemd
 
 ### 6. Constant-Time File Access (Toolong)
-Toolong's line-offset index enables instant opening of huge files. NMS-CLI log/capture viewers should never load entire files into memory.
+Toolong's line-offset index enables instant opening of huge files. Terminal SDK log/capture viewers should never load entire files into memory.
 
 ### 7. Real PTY Shell Integration (Toad)
-Toad embeds a real PTY — `cd` and env vars persist, interactive programs work. If NMS-CLI needs an embedded shell pane, use a PTY (not `subprocess.run`).
+Toad embeds a real PTY — `cd` and env vars persist, interactive programs work. If a terminal SDK client needs an embedded shell pane, use a PTY (not `subprocess.run`).
 
 ### 8. CLI-First, TUI-Optional (Memray)
-Memray's core CLI works without Textual; the TUI is one subcommand. NMS-CLI should:
+Memray's core CLI works without Textual; the TUI is one subcommand. A terminal SDK client should:
 - Keep all features available from the CLI
 - Make the TUI an optional interactive layer on top
 
 ### 9. Pipe Support (Toolong)
-`tree / | tl` works because Toolong accepts stdin as a file. NMS-CLI commands should be pipeable: `nms show route | tl`, `nms capture | tl`.
+`tree / | tl` works because Toolong accepts stdin as a file. Terminal SDK commands should be pipeable: `nbx dcim devices list | tl`, `nbx dcim devices list --output json | tl`.
 
 ### 10. Jump Mode & Command Palette (Posting)
-Posting's jump mode (letter overlays) and command palette (`Ctrl+P`) minimize mouse dependency. Essential for NMS engineers working over SSH or on headless servers.
+Posting's jump mode (letter overlays) and command palette (`Ctrl+P`) minimize mouse dependency. Essential for network engineers working over SSH or on headless servers.
 
 ---
 

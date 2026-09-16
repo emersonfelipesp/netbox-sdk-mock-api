@@ -1,11 +1,8 @@
 # netbox_sdk/reference — Bundled SDK Reference Assets
 
-## Workspace Context
+## Repository Context
 
-This file lives at `/root/personal-context/nmulticloud-context/netbox-cli/netbox_sdk/reference/CLAUDE.md` inside the `personal-context` workspace.
-Workspace guidance: `/root/personal-context/CLAUDE.md`.
-Per-repo deep-dive: `/root/personal-context/claude-reference/netbox-cli.md`.
-Submodule layout and cross-repo links: `/root/personal-context/claude-reference/dependency-map.md`.
+This guide is part of the public `netbox-sdk` repository. Use the nearest scoped `CLAUDE.md` or `AGENTS.md` for the files you are changing.
 
 ---
 

@@ -335,7 +335,7 @@ class CommandModal(ModalScreen):
 
 ---
 
-## Lessons for NMS-CLI
+## Lessons for terminal SDK clients
 
 | Pattern | How Dolphie Does It | Applicability |
 |---------|--------------------|--------------|

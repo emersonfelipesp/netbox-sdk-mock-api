@@ -320,15 +320,15 @@ def on_screen_resume(self) -> None:
 
 ---
 
-## Lessons for NMS-CLI
+## Lessons for terminal SDK clients
 
 | Pattern | How Posting Does It | Applicability |
 |---------|--------------------|--------------|
 | YAML-based config storage | Requests as YAML files in a directory | Device config / templates as files |
-| Jump mode navigation | Letter overlays on widgets | Keyboard-first navigation in NMS TUI |
+| Jump mode navigation | Letter overlays on widgets | Keyboard-first navigation in a TUI |
 | Command palette | `Ctrl+P` fuzzy finder for all actions | Global action dispatch |
 | Vim keybindings | Optional vim mode | Power user mode |
 | Environments | Named env files with variable substitution | Multi-site / multi-environment support |
 | Pre/post hooks | Python scripts before/after requests | Pre/post command hooks |
 | tree-sitter highlighting | Accurate syntax highlighting | CLI output / config highlighting |
-| SSH-friendly | Pure terminal, no GUI | NMS-CLI should be fully SSH-usable |
+| SSH-friendly | Pure terminal, no GUI | Terminal clients should be fully SSH-usable |

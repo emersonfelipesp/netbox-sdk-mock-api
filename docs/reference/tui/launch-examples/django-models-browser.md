@@ -26,13 +26,13 @@
     │ --theme        -t      TEXT  Theme name (e.g. netbox-dark, dracula).         │
     │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
     │                              (auto-builds if cache missing).                 │
-    │                              [default: /root/nms/netbox/netbox]              │
+    │                              [default: netbox]                               │
     │ --cache-path   -o      PATH  Path to a specific model graph JSON file.       │
     │ --help                       Show this message and exit.                     │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.369s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -62,12 +62,12 @@
     │ --theme        -t      TEXT  Theme name (e.g. netbox-dark, dracula).         │
     │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
     │                              (auto-builds if cache missing).                 │
-    │                              [default: /root/nms/netbox/netbox]              │
+    │                              [default: netbox]                               │
     │ --cache-path   -o      PATH  Path to a specific model graph JSON file.       │
     │ --help                       Show this message and exit.                     │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.970s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

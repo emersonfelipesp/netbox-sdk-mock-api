@@ -1,7 +1,7 @@
 # Toad — Comprehensive Visual & Design Guide
 
-**Source:** `/root/nms/textual-projects/toad/`
-**Purpose:** Design reference for NMS-CLI visual language, layout patterns, and component styling
+**Source:** Toad public project design patterns
+**Purpose:** Design reference for terminal visual language, layout patterns, and component styling
 
 ---
 
@@ -27,7 +27,7 @@
 18. [Component Hierarchy](#18-component-hierarchy)
 19. [Design Principles Summary](#19-design-principles-summary)
 20. [Design Token Reference](#20-design-token-reference)
-21. [Lessons for NMS-CLI](#21-lessons-for-nms-cli)
+21. [Lessons for terminal SDK clients](#21-lessons-for-terminal-sdk-clients)
 
 ---
 
@@ -1151,9 +1151,9 @@ Used sparingly for backgrounds where the same formula (e.g. `black 10%`) would l
 
 ---
 
-## 21. Lessons for NMS-CLI
+## 21. Lessons for terminal SDK clients
 
-| Design Pattern | How Toad Does It | NMS-CLI Application |
+| Design Pattern | How Toad Does It | Terminal SDK application |
 |---|---|---|
 | Left-stripe message categorization | `border-left: blank $color` | Color-code by NetBox app (DCIM=primary, IPAM=secondary, etc.) |
 | Status-driven widget borders | `.-success`/`.-error` CSS classes on blocks | Color-code device status (active/planned/staged/failed) |
@@ -1169,4 +1169,4 @@ Used sparingly for backgrounds where the same formula (e.g. `black 10%`) would l
 | `max-height` + scrollbar visibility | Collapsed thoughts | Collapsed detail panels with optional scroll |
 | Breakpoints via `HORIZONTAL_BREAKPOINTS` | `(0, "-narrow"), (100, "-wide")` | Adjust sidebar/detail panel at narrow terminals |
 | Settings as right-side overlay | 50% width, `align-horizontal: right` | NetBox settings / connection config panel |
-| Mandelbrot / decorative widget in title | `grid-columns: 24 1fr` + custom widget | ASCII art / sparkline in NMS dashboard header |
+| Mandelbrot / decorative widget in title | `grid-columns: 24 1fr` + custom widget | ASCII art or sparkline in a dashboard header |

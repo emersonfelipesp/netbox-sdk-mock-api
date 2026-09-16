@@ -122,12 +122,14 @@ class DjangoModelTuiApp(App[None]):
         self,
         store: DjangoModelStore,
         *,
+        netbox_root: Path = Path("netbox"),
         theme_name: str | None = None,
         client_factory: Callable[[], NetBoxApiClient] | None = None,
         index_factory: Callable[[], SchemaIndex] | None = None,
     ) -> None:
         super().__init__()
         self.store = store
+        self.netbox_root = netbox_root
         self._client_factory = client_factory
         self._index_factory = index_factory
         self._graph: dict[str, Any] | None = None
@@ -370,11 +372,10 @@ class DjangoModelTuiApp(App[None]):
     def _rebuild(self) -> None:
         try:
             self.notify("Rebuilding model cache...", timeout=10)
-            netbox_root = Path("/root/nms/netbox/netbox/")
-            if not netbox_root.is_dir():
-                self.notify(f"NetBox source not found at {netbox_root}", severity="error")
+            if not self.netbox_root.is_dir():
+                self.notify(f"NetBox source not found at {self.netbox_root}", severity="error")
                 return
-            self._graph = self.store.build(netbox_root)
+            self._graph = self.store.build(self.netbox_root)
             self._build_tree()
             self._render_stats()
             self.notify(
@@ -788,6 +789,7 @@ class DjangoModelTuiApp(App[None]):
 def run_django_model_tui(
     store: DjangoModelStore | None = None,
     *,
+    netbox_root: Path = Path("netbox"),
     theme_name: str | None = None,
     client_factory: Callable[[], NetBoxApiClient] | None = None,
     index_factory: Callable[[], SchemaIndex] | None = None,
@@ -798,6 +800,7 @@ def run_django_model_tui(
     try:
         app = DjangoModelTuiApp(
             store=store,
+            netbox_root=netbox_root,
             theme_name=theme_name,
             client_factory=client_factory,
             index_factory=index_factory,

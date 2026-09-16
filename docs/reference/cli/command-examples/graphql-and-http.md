@@ -21,9 +21,7 @@
      Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-    │                       TUI                                                    │
-    │                       [required]                                             │
+    │ *    query      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -36,7 +34,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.968s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -76,6 +74,6 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.014s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
