@@ -16,12 +16,15 @@
 
     ```text
                                                                                     
-     Usage: nbx [OPTIONS] COMMAND [ARGS]...                                         
+     Usage: nbx [OPTIONS] [COMMAND] [ARGS]...                                       
                                                                                     
      NetBox SDK CLI. Dynamic command form: nbx <group> <resource> <action>          
                                                                                     
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
-    │ --help          Show this message and exit.                                  │
+    │ --branch        TEXT  Activate a netbox-branching schema_id (or branch name) │
+    │                       for this invocation.                                   │
+    │                       [env var: NETBOX_BRANCH]                               │
+    │ --help                Show this message and exit.                            │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
     │ init            Create or update the default NetBox SDK profile.             │
@@ -42,6 +45,9 @@
     │                 input/output).                                               │
     │ demo            NetBox demo.netbox.dev profile and command tree.             │
     │ dev             Developer-focused tools and experimental interfaces.         │
+    │ branching       Manage netbox-branching plugin objects (branches, syncs,     │
+    │                 merges).                                                     │
+    │ branch          Alias for 'branching'.                                       │
     │ circuits        OpenAPI app group: circuits                                  │
     │ core            OpenAPI app group: core                                      │
     │ dcim            OpenAPI app group: dcim                                      │
@@ -56,7 +62,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">5.761s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -98,7 +104,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.178s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -128,7 +134,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">5.443s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -162,7 +168,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.265s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -190,12 +196,14 @@
     │ --help          Show this message and exit.                                  │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Commands ───────────────────────────────────────────────────────────────────╮
-    │ generate-capture  Capture docs-safe ``nbx`` command output against the demo  │
-    │                   profile only.                                              │
+    │ generate-capture         Capture docs-safe ``nbx`` command output against    │
+    │                          the demo profile only.                              │
+    │ generate-tui-simulation  Capture fixture-backed main TUI SVG states for      │
+    │                          website simulations.                                │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.575s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -247,6 +255,6 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.764s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

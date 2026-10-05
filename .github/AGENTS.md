@@ -10,12 +10,9 @@ This file mirrors the sibling `CLAUDE.md` guidance for agents that read `AGENTS.
 
 # .github — GitHub Actions Workflows
 
-## Workspace Context
+## Repository Context
 
-This file lives at `/root/personal-context/nmulticloud-context/netbox-cli/.github/CLAUDE.md` inside the `personal-context` workspace.
-Workspace guidance: `/root/personal-context/CLAUDE.md`.
-Per-repo deep-dive: `/root/personal-context/claude-reference/netbox-cli.md`.
-Submodule layout and cross-repo links: `/root/personal-context/claude-reference/dependency-map.md`.
+This guide is part of the public `netbox-sdk` repository. Use the nearest scoped `CLAUDE.md` or `AGENTS.md` for the files you are changing.
 
 ---
 

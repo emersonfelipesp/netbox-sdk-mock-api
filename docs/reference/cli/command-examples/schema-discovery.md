@@ -21,11 +21,13 @@
      List all available OpenAPI app groups.                                         
                                                                                     
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
+    │ --live          Include plugin/custom-object resources discovered from the   │
+    │                 configured NetBox instance.                                  │
     │ --help          Show this message and exit.                                  │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.529s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -50,14 +52,16 @@
      List resources available within a group.                                       
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    group      TEXT  OpenAPI app group, e.g. dcim [required]                │
+    │ *    group      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
+    │ --live          Include plugin/custom-object resources discovered from the   │
+    │                 configured NetBox instance.                                  │
     │ --help          Show this message and exit.                                  │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.328s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -86,11 +90,13 @@
     │ *    resource      TEXT  [required]                                          │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
+    │ --live          Include plugin/custom-object resources discovered from the   │
+    │                 configured NetBox instance.                                  │
     │ --help          Show this message and exit.                                  │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.989s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -122,7 +128,7 @@
     wireless
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.968s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -188,7 +194,7 @@
     virtual-device-contexts
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.320s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -224,6 +230,6 @@
     └────────┴──────────────────────────────────┴──────────────────────────────────┘
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.193s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

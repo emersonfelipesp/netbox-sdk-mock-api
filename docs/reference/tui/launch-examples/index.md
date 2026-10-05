@@ -6,14 +6,14 @@ These captures document the `netbox_tui` package launch surface. They cover help
 
 !!! info "Machine-generated"
     These pages are generated from the command-capture artifacts.
-    Last updated: `2026-03-28T02:54:01.319776+00:00`
+    Last updated: `reproducible-build`
 
 ??? note "Generation metadata"
     | Key | Value |
     |-----|-------|
     | Profile | `demo` |
     | NetBox URL | `https://demo.netbox.dev` |
-    | Token configured | `True` |
+    | Token configured | `False` |
     | Commands captured | `19` |
 
 ## Sections

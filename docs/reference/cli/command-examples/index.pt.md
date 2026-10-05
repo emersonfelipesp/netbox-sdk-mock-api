@@ -6,14 +6,14 @@ Estas capturas documentam o pacote `netbox_cli`. Qualquer comando que fale com u
 
 !!! info "Gerado automaticamente"
     Estas páginas são geradas a partir dos artefatos de captura de comandos.
-    Última atualização: `2026-03-28T02:54:01.319776+00:00`
+    Última atualização: `reproducible-build`
 
 ??? note "Metadados de geração"
     | Chave | Valor |
     |-----|-------|
     | Perfil | `demo` |
     | URL do NetBox | `https://demo.netbox.dev` |
-    | Token configurado | `True` |
+    | Token configurado | `False` |
     | Comandos capturados | `34` |
 
 ## Seções

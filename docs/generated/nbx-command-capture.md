@@ -17,11 +17,11 @@ Run the capture **in the background** (log + pid):
 
 ## Generation metadata
 
-- **UTC time:** `2026-03-28T02:54:01.319776+00:00`
+- **UTC time:** `reproducible-build`
 - **Profile used:** **demo profile** (`nbx demo ...` commands -> demo.netbox.dev)
 - **Effective NetBox URL:** `https://demo.netbox.dev`
 - **Effective timeout (s):** `30`
-- **Token configured:** `True`
+- **Token configured:** `False`
 
 > Docgen is restricted to the demo profile only. Any live data shown here comes from demo.netbox.dev, never from a production NetBox instance.
 
@@ -41,18 +41,21 @@ Run the capture **in the background** (log + pid):
 nbx --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `5.761`
+**Exit code:** `0`
 
 **Output:**
 
 ```text
                                                                                 
- Usage: nbx [OPTIONS] COMMAND [ARGS]...                                         
+ Usage: nbx [OPTIONS] [COMMAND] [ARGS]...                                       
                                                                                 
  NetBox SDK CLI. Dynamic command form: nbx <group> <resource> <action>          
                                                                                 
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
-│ --help          Show this message and exit.                                  │
+│ --branch        TEXT  Activate a netbox-branching schema_id (or branch name) │
+│                       for this invocation.                                   │
+│                       [env var: NETBOX_BRANCH]                               │
+│ --help                Show this message and exit.                            │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ───────────────────────────────────────────────────────────────────╮
 │ init            Create or update the default NetBox SDK profile.             │
@@ -73,6 +76,9 @@ nbx --help
 │                 input/output).                                               │
 │ demo            NetBox demo.netbox.dev profile and command tree.             │
 │ dev             Developer-focused tools and experimental interfaces.         │
+│ branching       Manage netbox-branching plugin objects (branches, syncs,     │
+│                 merges).                                                     │
+│ branch          Alias for 'branching'.                                       │
 │ circuits        OpenAPI app group: circuits                                  │
 │ core            OpenAPI app group: core                                      │
 │ dcim            OpenAPI app group: dcim                                      │
@@ -97,7 +103,7 @@ nbx --help
 nbx init --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.178`
+**Exit code:** `0`
 
 **Output:**
 
@@ -135,7 +141,7 @@ nbx init --help
 nbx config --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `5.443`
+**Exit code:** `0`
 
 **Output:**
 
@@ -161,7 +167,7 @@ nbx config --help
 nbx logs --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.265`
+**Exit code:** `0`
 
 **Output:**
 
@@ -191,7 +197,7 @@ nbx logs --help
 nbx docs --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.575`
+**Exit code:** `0`
 
 **Output:**
 
@@ -205,8 +211,10 @@ nbx docs --help
 │ --help          Show this message and exit.                                  │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ───────────────────────────────────────────────────────────────────╮
-│ generate-capture  Capture docs-safe ``nbx`` command output against the demo  │
-│                   profile only.                                              │
+│ generate-capture         Capture docs-safe ``nbx`` command output against    │
+│                          the demo profile only.                              │
+│ generate-tui-simulation  Capture fixture-backed main TUI SVG states for      │
+│                          website simulations.                                │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ```
 
@@ -220,7 +228,7 @@ nbx docs --help
 nbx docs generate-capture --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.764`
+**Exit code:** `0`
 
 **Output:**
 
@@ -270,7 +278,7 @@ nbx docs generate-capture --help
 nbx groups --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.529`
+**Exit code:** `0`
 
 **Output:**
 
@@ -281,6 +289,8 @@ nbx groups --help
  List all available OpenAPI app groups.                                         
                                                                                 
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --live          Include plugin/custom-object resources discovered from the   │
+│                 configured NetBox instance.                                  │
 │ --help          Show this message and exit.                                  │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ```
@@ -295,7 +305,7 @@ nbx groups --help
 nbx resources --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.328`
+**Exit code:** `0`
 
 **Output:**
 
@@ -306,9 +316,11 @@ nbx resources --help
  List resources available within a group.                                       
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    group      TEXT  OpenAPI app group, e.g. dcim [required]                │
+│ *    group      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --live          Include plugin/custom-object resources discovered from the   │
+│                 configured NetBox instance.                                  │
 │ --help          Show this message and exit.                                  │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ```
@@ -323,7 +335,7 @@ nbx resources --help
 nbx ops --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.989`
+**Exit code:** `0`
 
 **Output:**
 
@@ -338,6 +350,8 @@ nbx ops --help
 │ *    resource      TEXT  [required]                                          │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
+│ --live          Include plugin/custom-object resources discovered from the   │
+│                 configured NetBox instance.                                  │
 │ --help          Show this message and exit.                                  │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ```
@@ -352,7 +366,7 @@ nbx ops --help
 nbx groups
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.968`
+**Exit code:** `0`
 
 **Output:**
 
@@ -380,7 +394,7 @@ wireless
 nbx resources dcim
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.320`
+**Exit code:** `0`
 
 **Output:**
 
@@ -442,7 +456,7 @@ virtual-device-contexts
 nbx ops dcim devices
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.193`
+**Exit code:** `0`
 
 **Output:**
 
@@ -476,7 +490,7 @@ nbx ops dcim devices
 nbx graphql --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.968`
+**Exit code:** `0`
 
 **Output:**
 
@@ -487,9 +501,7 @@ nbx graphql --help
  Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-│                       TUI                                                    │
-│                       [required]                                             │
+│ *    query      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -512,7 +524,7 @@ nbx graphql --help
 nbx call --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.014`
+**Exit code:** `0`
 
 **Output:**
 
@@ -550,7 +562,7 @@ nbx call --help
 nbx dcim --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.337`
+**Exit code:** `0`
 
 **Output:**
 
@@ -622,7 +634,7 @@ nbx dcim --help
 nbx dcim devices list --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.322`
+**Exit code:** `0`
 
 **Output:**
 
@@ -666,7 +678,7 @@ nbx dcim devices list --help
 nbx dcim interfaces get --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.081`
+**Exit code:** `0`
 
 **Output:**
 
@@ -710,7 +722,7 @@ nbx dcim interfaces get --help
 nbx demo dcim devices create --dry-run --body-json {"name":"test"} --markdown
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.986`
+**Exit code:** `0`
 
 **Output:**
 
@@ -739,7 +751,7 @@ nbx demo dcim devices create --dry-run --body-json {"name":"test"} --markdown
 nbx dev --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.926`
+**Exit code:** `0`
 
 **Output:**
 
@@ -771,7 +783,7 @@ nbx dev --help
 nbx dev http --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.831`
+**Exit code:** `0`
 
 **Output:**
 
@@ -806,7 +818,7 @@ nbx dev http --help
 nbx dev http paths --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.911`
+**Exit code:** `0`
 
 **Output:**
 
@@ -817,7 +829,7 @@ nbx dev http paths --help
  List all OpenAPI paths from the bundled NetBox schema.                         
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│   search      [SEARCH]  Optional substring filter on path                    │
+│   search      [SEARCH]                                                       │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --method  -m      TEXT  Filter by HTTP method (GET, POST, PUT, PATCH,        │
@@ -837,7 +849,7 @@ nbx dev http paths --help
 nbx dev http ops --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.919`
+**Exit code:** `0`
 
 **Output:**
 
@@ -863,7 +875,7 @@ nbx dev http ops --help
 nbx dev http paths
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.203`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1455,7 +1467,7 @@ nbx dev http paths
 nbx dev http ops --path /api/dcim/devices/
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.027`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1482,7 +1494,7 @@ nbx dev http ops --path /api/dcim/devices/
 nbx dev django-model --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.911`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1512,7 +1524,7 @@ nbx dev django-model --help
 nbx dev django-model build --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.971`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1528,7 +1540,7 @@ nbx dev django-model build --help
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
 │                              (contains dcim/, ipam/, etc.).                  │
-│                              [default: /root/nms/netbox/netbox]              │
+│                              [default: netbox]                               │
 │ --rebuild      -r            Force rebuild even if cache exists.             │
 │ --cache-path   -o      PATH  Output path for the JSON build file (default:   │
 │                              ~/.config/netbox-sdk/django_models.json).       │
@@ -1546,7 +1558,7 @@ nbx dev django-model build --help
 nbx dev django-model fetch --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.913`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1562,8 +1574,7 @@ nbx dev django-model fetch --help
  nbx dev django-model fetch --auto                                              
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│   tag      [TAG]  Release tag to fetch (e.g. v4.2.1). Omit with --auto to    │
-│                   detect from connected NetBox.                              │
+│   tag      [TAG]                                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --auto  -a        Detect NetBox version from the default profile and fetch   │
@@ -1584,13 +1595,13 @@ nbx dev django-model fetch --help
 nbx demo --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.922`
+**Exit code:** `0`
 
 **Output:**
 
 ```text
                                                                                 
- Usage: nbx demo [OPTIONS] COMMAND [ARGS]...                                    
+ Usage: nbx demo [OPTIONS] [COMMAND] [ARGS]...                                  
                                                                                 
  NetBox demo.netbox.dev profile and command tree.                               
                                                                                 
@@ -1637,7 +1648,7 @@ nbx demo --help
 nbx demo init --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.930`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1678,7 +1689,7 @@ nbx demo init --help
 nbx demo config --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.755`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1704,7 +1715,7 @@ nbx demo config --help
 nbx demo dev --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.848`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1739,7 +1750,7 @@ nbx demo dev --help
 nbx demo cli --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.791`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1767,7 +1778,7 @@ nbx demo cli --help
 nbx demo dev django-model --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.895`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1797,7 +1808,7 @@ nbx demo dev django-model --help
 nbx demo config
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.726`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1829,7 +1840,7 @@ nbx demo config
 nbx tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.835`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1856,7 +1867,7 @@ nbx tui --help
 nbx tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.970`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1879,7 +1890,7 @@ Available themes:
 nbx demo tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.690`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1908,7 +1919,7 @@ nbx demo tui --help
 nbx tui logs --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.914`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1933,7 +1944,7 @@ Available themes:
 nbx dev tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.643`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1960,7 +1971,7 @@ nbx dev tui --help
 nbx dev tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.865`
+**Exit code:** `0`
 
 **Output:**
 
@@ -1983,7 +1994,7 @@ Available themes:
 nbx demo dev tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.808`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2010,7 +2021,7 @@ nbx demo dev tui --help
 nbx demo dev tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.158`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2035,7 +2046,7 @@ Available themes:
 nbx graphql --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.736`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2046,9 +2057,7 @@ nbx graphql --help
  Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-│                       TUI                                                    │
-│                       [required]                                             │
+│ *    query      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -2071,7 +2080,7 @@ nbx graphql --help
 nbx graphql tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.667`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2082,9 +2091,7 @@ nbx graphql tui --help
  Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-│                       TUI                                                    │
-│                       [required]                                             │
+│ *    query      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -2107,7 +2114,7 @@ nbx graphql tui --help
 nbx graphql tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.919`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2130,7 +2137,7 @@ Available themes:
 nbx demo graphql --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.578`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2142,9 +2149,7 @@ nbx demo graphql --help
  TUI.                                                                           
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-│                       TUI                                                    │
-│                       [required]                                             │
+│ *    query      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -2167,7 +2172,7 @@ nbx demo graphql --help
 nbx demo graphql tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.763`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2179,9 +2184,7 @@ nbx demo graphql tui --help
  TUI.                                                                           
                                                                                 
 ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-│ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-│                       TUI                                                    │
-│                       [required]                                             │
+│ *    query      TEXT  [required]                                             │
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -2204,7 +2207,7 @@ nbx demo graphql tui --help
 nbx demo graphql tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.188`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2229,7 +2232,7 @@ Available themes:
 nbx cli tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.043`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2258,7 +2261,7 @@ nbx cli tui --help
 nbx demo cli tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.471`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2285,7 +2288,7 @@ nbx demo cli tui --help
 nbx demo cli tui --theme
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.196`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2310,7 +2313,7 @@ Available themes:
 nbx dev django-model tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `4.369`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2326,7 +2329,7 @@ nbx dev django-model tui --help
 │ --theme        -t      TEXT  Theme name (e.g. netbox-dark, dracula).         │
 │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
 │                              (auto-builds if cache missing).                 │
-│                              [default: /root/nms/netbox/netbox]              │
+│                              [default: netbox]                               │
 │ --cache-path   -o      PATH  Path to a specific model graph JSON file.       │
 │ --help                       Show this message and exit.                     │
 ╰──────────────────────────────────────────────────────────────────────────────╯
@@ -2342,7 +2345,7 @@ nbx dev django-model tui --help
 nbx demo dev django-model tui --help
 ```
 
-**Exit code:** `0`  ·  **Wall time (s):** `3.970`
+**Exit code:** `0`
 
 **Output:**
 
@@ -2358,7 +2361,7 @@ nbx demo dev django-model tui --help
 │ --theme        -t      TEXT  Theme name (e.g. netbox-dark, dracula).         │
 │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
 │                              (auto-builds if cache missing).                 │
-│                              [default: /root/nms/netbox/netbox]              │
+│                              [default: netbox]                               │
 │ --cache-path   -o      PATH  Path to a specific model graph JSON file.       │
 │ --help                       Show this message and exit.                     │
 ╰──────────────────────────────────────────────────────────────────────────────╯

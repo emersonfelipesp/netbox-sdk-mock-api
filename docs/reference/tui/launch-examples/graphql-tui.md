@@ -21,9 +21,7 @@
      Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-    │                       TUI                                                    │
-    │                       [required]                                             │
+    │ *    query      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -36,7 +34,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.736s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -61,9 +59,7 @@
      Execute a GraphQL query against the NetBox API, or launch the GraphQL TUI.     
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-    │                       TUI                                                    │
-    │                       [required]                                             │
+    │ *    query      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -76,7 +72,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.667s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -103,7 +99,7 @@
     - tokyo-night
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.919s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -129,9 +125,7 @@
      TUI.                                                                           
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-    │                       TUI                                                    │
-    │                       [required]                                             │
+    │ *    query      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -144,7 +138,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.578s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -170,9 +164,7 @@
      TUI.                                                                           
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │ *    query      TEXT  GraphQL query string, or 'tui' to launch the GraphQL   │
-    │                       TUI                                                    │
-    │                       [required]                                             │
+    │ *    query      TEXT  [required]                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --variables  -v      TEXT  GraphQL variables: one JSON object, or repeat for │
@@ -185,7 +177,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.763s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -212,6 +204,6 @@
     - tokyo-night
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.188s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

@@ -88,7 +88,7 @@ class CaptureResult:
             "argv": list(self.argv),
             "argv_base": list(self.argv_base),
             "exit_code": self.exit_code,
-            "elapsed_seconds": round(self.elapsed_seconds, 3),
+            "elapsed_seconds": 0.0,
             "truncated": self.truncated,
             "stdout_full": self.stdout_full,
         }
