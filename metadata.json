@@ -7,9 +7,9 @@
     "4.5",
     "4.6"
   ],
-  "generated_at": "2026-09-15T23:08:21Z",
+  "generated_at": "2026-10-09T21:03:21Z",
   "source": {
     "repo": "emersonfelipesp/netbox-sdk-mock-api",
-    "commit": "0d482b0540d566cc392defee286f4c4d7bcebf55"
+    "commit": "6c7121d4799a8ac4de4f214a1e580e03477fa773"
   }
 }
