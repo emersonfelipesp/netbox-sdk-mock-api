@@ -142,3 +142,10 @@ When updating a release or topic branch from `main`, **`main` has priority on me
 - Do not mix bare tags and package-prefixed titles across releases.
 - Example: tag `v0.0.7.post1`, title `netbox-sdk v0.0.7.post1`.
 - When bumping the package version, also update **`docs/snippets/package-version.txt`**, **`mkdocs.yml`** → **`extra.package_version`**, and the pinned-command snippets under **`docs/snippets/`** (`documented-release-*.md`, `pip-pinned-*.txt`, `uv-pinned-cli.txt`), then run **`uv lock`**. **`tests/test_docs_alignment.py`** guards drift vs **`pyproject.toml`**.
+
+
+## Native FastAPI telemetry
+
+The mock application uses FastAPI 0.143.0 native telemetry. Public export is opt-in: do not inject a collector endpoint, service identity, or automatic configuration flag. Preserve explicit caller configuration, SDK and per-signal disable controls, provider ownership, and scoped privacy filtering. Do not add a second FastAPI or ASGI instrumentor.
+
+Run the native telemetry regression modules with the committed dependency lock. These tests use fresh subprocesses and loopback collectors to verify actual export, caller ownership after application shutdown, and normal and exceptional nested request context restoration. Ordinary tests disable remote telemetry export. Preserve independent generated models, metadata, documentation, and security changes when integrating this source update.

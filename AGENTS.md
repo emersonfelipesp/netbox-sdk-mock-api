@@ -58,3 +58,10 @@ Keep both docs installation paths in `pyproject.toml` aligned, regenerate
 complete graph exported with
 `uv export --frozen --all-extras --all-groups --no-hashes --no-emit-project`;
 never hand-edit `uv.lock` or weaken a security floor to satisfy resolution.
+
+
+## Native FastAPI telemetry
+
+The mock application uses FastAPI 0.143.0 native telemetry. Public export is opt-in: do not inject a collector endpoint, service identity, or automatic configuration flag. Preserve explicit caller configuration, SDK and per-signal disable controls, provider ownership, and scoped privacy filtering. Do not add a second FastAPI or ASGI instrumentor.
+
+Run the native telemetry regression modules with the committed dependency lock. These tests use fresh subprocesses and loopback collectors to verify actual export, caller ownership after application shutdown, and normal and exceptional nested request context restoration. Ordinary tests disable remote telemetry export. Preserve independent generated models, metadata, documentation, and security changes when integrating this source update.
