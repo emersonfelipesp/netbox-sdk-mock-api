@@ -6,6 +6,7 @@ import os
 from typing import Any
 
 from fastapi import FastAPI
+from fastapi.telemetry import TelemetryConfig
 
 from netbox_sdk import __version__ as _sdk_version
 from netbox_sdk.mock.loader import load_mock_data
@@ -17,6 +18,7 @@ from netbox_sdk.mock.routes_branching import (
     register_branching_mock_routes,
 )
 from netbox_sdk.mock.state import ThreadSafeMockStore, mock_store, reset_mock_state
+from netbox_sdk.mock.telemetry import configure_telemetry_privacy
 from netbox_sdk.schema import load_openapi_schema
 from netbox_sdk.versioning import SupportedNetBoxVersion, normalize_netbox_version
 
@@ -24,6 +26,7 @@ from netbox_sdk.versioning import SupportedNetBoxVersion, normalize_netbox_versi
 def create_mock_app(
     *,
     version: SupportedNetBoxVersion | None = None,
+    telemetry: TelemetryConfig | None = None,
 ) -> FastAPI:
     """Build the standalone NetBox mock API FastAPI application.
 
@@ -45,7 +48,9 @@ def create_mock_app(
     openapi_doc = load_openapi_schema(version=resolved_version)
     netbox_api_version = openapi_doc.get("info", {}).get("version", resolved_version)
 
+    prepared_telemetry = configure_telemetry_privacy(telemetry)
     app = FastAPI(
+        telemetry=prepared_telemetry,
         title="NetBox Mock API",
         description=(
             "Schema-driven in-memory FastAPI mock for the NetBox REST API. "

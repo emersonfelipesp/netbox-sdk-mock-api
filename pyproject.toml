@@ -37,7 +37,7 @@ dependencies = [
   "email-validator>=2.3.0",
   "rich>=14.3.3",
   "pyyaml>=6.0.3",
-  "fastapi[standard]>=0.115.0",
+  "fastapi[standard]==0.143.0",
   "uvicorn[standard]>=0.30.0",
 ]
 
@@ -47,7 +47,7 @@ tui = ["textual>=8.2.0"]
 cli = ["typer>=0.24.1"]
 demo = ["playwright>=1.58.0"]
 mock = [
-  "fastapi>=0.115.0",
+  "fastapi>=0.142.2",
   "uvicorn[standard]>=0.30.0",
 ]
 # netbox-branching plugin support. Marker-only: branching uses the core
@@ -58,7 +58,7 @@ all = [
   "textual>=8.2.0",
   "typer>=0.24.1",
   "playwright>=1.58.0",
-  "fastapi>=0.115.0",
+  "fastapi>=0.142.2",
   "uvicorn[standard]>=0.30.0",
 ]
 dev = [
@@ -72,7 +72,7 @@ dev = [
   "textual>=8.2.0",
   "typer>=0.24.1",
   "playwright>=1.58.0",
-  "fastapi>=0.115.0",
+  "fastapi>=0.142.2",
   "uvicorn[standard]>=0.30.0",
   "httpx>=0.27.0",
   "packaging>=24.0",
@@ -94,7 +94,7 @@ dev = [
   "textual>=8.2.0",
   "typer>=0.24.1",
   "playwright>=1.58.0",
-  "fastapi>=0.115.0",
+  "fastapi>=0.142.2",
   "uvicorn[standard]>=0.30.0",
   "httpx>=0.27.0",
   "packaging>=24.0",
@@ -186,3 +186,6 @@ all = "ignore"
 
 [tool.vercel]
 entrypoint = "netbox_sdk.mock_main:app"
+
+[tool.uv]
+constraint-dependencies = ["multidict>=6.9.1"]

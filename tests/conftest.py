@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 OPENAPI_PATH = (
@@ -7,3 +8,7 @@ OPENAPI_PATH = (
     / "openapi"
     / "netbox-openapi.json"
 )
+
+
+# Ordinary regression tests never export to operator-configured destinations.
+os.environ["OTEL_SDK_DISABLED"] = "true"
