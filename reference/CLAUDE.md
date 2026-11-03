@@ -1,11 +1,8 @@
 # reference — Design and Framework References
 
-## Workspace Context
+## Repository Context
 
-This file lives at `/root/personal-context/nmulticloud-context/netbox-cli/reference/CLAUDE.md` inside the `personal-context` workspace.
-Workspace guidance: `/root/personal-context/CLAUDE.md`.
-Per-repo deep-dive: `/root/personal-context/claude-reference/netbox-cli.md`.
-Submodule layout and cross-repo links: `/root/personal-context/claude-reference/dependency-map.md`.
+This guide is part of the public `netbox-sdk` repository. Use the nearest scoped `CLAUDE.md` or `AGENTS.md` for the files you are changing.
 
 ---
 
@@ -52,7 +49,6 @@ Annotated source / documentation extracts from real-world Textual apps, used to 
 | `MEMRAY.md` | Memray — memory profiling TUI |
 | `POSTING.md` | Posting — HTTP client TUI |
 | `TOOLONG.md` | Toolong — log viewer TUI |
-| `NMS-CLI.md` | nms-cli — prior art for this project |
 | `CLAUDE.md` | Claude-specific Textual guidance |
 
 **When to consult:** Before implementing new Textual patterns, especially: `@work` usage, `Pilot` testing, reactive attributes, CSS selectors, `on_*` message handlers, `compose()` patterns.

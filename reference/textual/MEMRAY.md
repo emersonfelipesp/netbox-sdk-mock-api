@@ -338,7 +338,7 @@ class TUIApp(App[None]):
 
 ---
 
-## Lessons for NMS-CLI
+## Lessons for terminal SDK clients
 
 | Pattern | How Memray Does It | Applicability |
 |---------|-------------------|--------------|
