@@ -2,7 +2,7 @@ name: Tests
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
   pull_request:
     branches: ["**"]
 
@@ -490,3 +490,84 @@ jobs:
             kill "$(cat /tmp/netbox-source.pid)" 2>/dev/null || true
           fi
           docker rm -f netbox-ci 2>/dev/null || true
+
+  test-summary:
+    name: test quality
+    if: ${{ always() }}
+    needs: [changes, test-sdk, test-cli, test-tui, test-all-mock, test-all-mock-main, test-live-netbox]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require all selected test matrices
+        shell: bash
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          RUN_ALL: ${{ needs.changes.outputs.run_all }}
+          SDK: ${{ needs.changes.outputs.sdk }}
+          CLI: ${{ needs.changes.outputs.cli }}
+          TUI: ${{ needs.changes.outputs.tui }}
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          SDK_RESULT: ${{ needs.test-sdk.result }}
+          CLI_RESULT: ${{ needs.test-cli.result }}
+          TUI_RESULT: ${{ needs.test-tui.result }}
+          ALL_RESULT: ${{ needs.test-all-mock.result }}
+          MAIN_RESULT: ${{ needs.test-all-mock-main.result }}
+          LIVE_RESULT: ${{ needs.test-live-netbox.result }}
+        run: |
+          set -euo pipefail
+          if [ "$CHANGES_RESULT" != success ]; then
+            printf 'Scope selection must succeed, got %s\n' "$CHANGES_RESULT" >&2
+            exit 1
+          fi
+          for value in "$RUN_ALL" "$SDK" "$CLI" "$TUI"; do
+            case "$value" in
+              true|false) ;;
+              *) printf 'Invalid scope output: %s\n' "$value" >&2; exit 1 ;;
+            esac
+          done
+          for value in "$SDK_RESULT" "$CLI_RESULT" "$TUI_RESULT" "$ALL_RESULT" "$MAIN_RESULT" "$LIVE_RESULT"; do
+            case "$value" in
+              success|failure|cancelled|skipped) ;;
+              *) printf 'Invalid native job result: %s\n' "$value" >&2; exit 1 ;;
+            esac
+          done
+          if [ -z "$REF_NAME" ]; then
+            printf 'The workflow ref name must be present.\n' >&2
+            exit 1
+          fi
+          expected_all=skipped
+          expected_main=skipped
+          expected_live=skipped
+          case "$EVENT_NAME:$REF_NAME" in
+            push:main)
+              is_main=true
+              expected_main=success
+              expected_live=success
+              ;;
+            pull_request:*)
+              is_main=false
+              if [ "$RUN_ALL" = true ]; then expected_all=success; fi
+              ;;
+            *) printf 'Unexpected workflow event/ref: %s/%s\n' "$EVENT_NAME" "$REF_NAME" >&2; exit 1 ;;
+          esac
+          for spec in "sdk:$SDK:$SDK_RESULT" "cli:$CLI:$CLI_RESULT" "tui:$TUI:$TUI_RESULT"; do
+            IFS=: read -r scope selected result <<< "$spec"
+            expected=skipped
+            if [ "$is_main" = false ] && [ "$RUN_ALL" = false ] && [ "$selected" = true ]; then
+              expected=success
+            fi
+            if [ "$result" != "$expected" ]; then
+              printf '%s matrix must be %s, got %s\n' "$scope" "$expected" "$result" >&2
+              exit 1
+            fi
+          done
+          for spec in "all:$expected_all:$ALL_RESULT" "main:$expected_main:$MAIN_RESULT" "live:$expected_live:$LIVE_RESULT"; do
+            IFS=: read -r scope expected result <<< "$spec"
+            if [ "$result" != "$expected" ]; then
+              printf '%s matrix must be %s, got %s\n' "$scope" "$expected" "$result" >&2
+              exit 1
+            fi
+          done
+          printf 'All selected test matrices succeeded; only unselected matrices skipped.\n'

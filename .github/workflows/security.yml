@@ -2,7 +2,7 @@ name: Security Tests
 
 on:
   push:
-    branches: ["**"]
+    branches: ["main"]
   pull_request:
     branches: ["**"]
 
@@ -124,3 +124,53 @@ jobs:
 
       - name: Run TUI security tests
         run: uv run pytest -v --tb=short -p no:randomly tests/test_security_tui.py
+
+  security-summary:
+    name: security quality
+    if: ${{ always() }}
+    needs: [changes, security-sdk, security-cli, security-tui]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require all selected security matrices
+        shell: bash
+        env:
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          RUN_ALL: ${{ needs.changes.outputs.run_all }}
+          SDK: ${{ needs.changes.outputs.sdk }}
+          CLI: ${{ needs.changes.outputs.cli }}
+          TUI: ${{ needs.changes.outputs.tui }}
+          SDK_RESULT: ${{ needs.security-sdk.result }}
+          CLI_RESULT: ${{ needs.security-cli.result }}
+          TUI_RESULT: ${{ needs.security-tui.result }}
+        run: |
+          set -euo pipefail
+          if [ "$CHANGES_RESULT" != success ]; then
+            printf 'Scope selection must succeed, got %s\n' "$CHANGES_RESULT" >&2
+            exit 1
+          fi
+          for value in "$RUN_ALL" "$SDK" "$CLI" "$TUI"; do
+            case "$value" in
+              true|false) ;;
+              *) printf 'Invalid scope output: %s\n' "$value" >&2; exit 1 ;;
+            esac
+          done
+          for value in "$SDK_RESULT" "$CLI_RESULT" "$TUI_RESULT"; do
+            case "$value" in
+              success|failure|cancelled|skipped) ;;
+              *) printf 'Invalid native job result: %s\n' "$value" >&2; exit 1 ;;
+            esac
+          done
+          for spec in "sdk:$SDK:$SDK_RESULT" "cli:$CLI:$CLI_RESULT" "tui:$TUI:$TUI_RESULT"; do
+            IFS=: read -r scope selected result <<< "$spec"
+            expected=skipped
+            if [ "$RUN_ALL" = true ] || [ "$selected" = true ]; then
+              expected=success
+            fi
+            if [ "$result" != "$expected" ]; then
+              printf '%s matrix must be %s, got %s\n' "$scope" "$expected" "$result" >&2
+              exit 1
+            fi
+          done
+          printf 'All selected security matrices succeeded; only unselected matrices skipped.\n'
