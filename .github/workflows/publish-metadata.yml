@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: publish-metadata
@@ -32,21 +33,121 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Record generated-data source base
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${GITHUB_SERVER_URL:-}" != https://github.com ] || [ "$GITHUB_REPOSITORY" != emersonfelipesp/netbox-sdk-mock-api ]; then
+            printf 'Unexpected provider or repository; refusing generated-data writeback.\n' >&2
+            exit 1
+          fi
+          repository_url=https://github.com/emersonfelipesp/netbox-sdk-mock-api.git
+          case "$GITHUB_REF" in
+            refs/heads/*) target_branch=${GITHUB_REF#refs/heads/} ;;
+            *) printf 'Generation writeback requires a branch ref.\n' >&2; exit 1 ;;
+          esac
+          git check-ref-format --branch "$target_branch"
+          git fetch --no-tags "$repository_url" "$GITHUB_REF"
+          base=$(git rev-parse FETCH_HEAD)
+          if [ "$(git rev-parse HEAD)" != "$base" ]; then
+            printf 'Selected branch changed before generation; refusing stale output.\n' >&2
+            exit 1
+          fi
+          printf 'GENERATED_BASE_SHA=%s\nGENERATED_BASE_REF=%s\n' "$base" "$GITHUB_REF" >> "$GITHUB_ENV"
+
       - name: Generate metadata.json
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
         run: python scripts/build_metadata.py
 
-      - name: Commit and push if changed
+      - name: Propose generated data through a pull request
         if: github.ref == 'refs/heads/main'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- metadata.json; then
-            echo "metadata.json unchanged; nothing to commit."
-            exit 0
+          set -euo pipefail
+          branch=unassigned
+          trap 'code=$?; if [ "$code" -ne 0 ]; then printf "Generated-data proposal stopped (exit %s). Retain any run-owned branch/PR %s for inspection; no force or cleanup was attempted.\n" "$code" "$branch" >&2; fi' EXIT
+          if [ "${GITHUB_SERVER_URL:-}" != https://github.com ] || [ "$GITHUB_REPOSITORY" != emersonfelipesp/netbox-sdk-mock-api ]; then
+            printf 'Unexpected provider or repository; refusing generated-data writeback.\n' >&2
+            exit 1
           fi
-          git config user.name  "github-actions[bot]"
+          if [[ ! "$GITHUB_RUN_ID:$GITHUB_RUN_ATTEMPT" =~ ^[0-9]+:[0-9]+$ ]] || [[ ! "$GENERATED_BASE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            printf 'Invalid run identity or captured source base.\n' >&2
+            exit 1
+          fi
+          case "$GITHUB_REF" in
+            refs/heads/*) target_branch=${GITHUB_REF#refs/heads/} ;;
+            *) printf 'Generation writeback requires a branch ref.\n' >&2; exit 1 ;;
+          esac
+          git check-ref-format --branch "$target_branch"
+          if [ "${GENERATED_BASE_REF:-}" != "$GITHUB_REF" ]; then
+            printf 'Captured source ref does not match the selected branch.\n' >&2
+            exit 1
+          fi
+          repository_url=https://github.com/emersonfelipesp/netbox-sdk-mock-api.git
+          branch="generated/metadata-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          git diff --quiet -- . ':(exclude)metadata.json'
+          git diff --cached --quiet -- . ':(exclude)metadata.json'
+          untracked=$(git ls-files --others --exclude-standard -- . ':(exclude)metadata.json')
+          if [ -n "$untracked" ]; then
+            printf 'Untracked files outside the generated output; refusing proposal.\n' >&2
+            exit 1
+          fi
+          git add -- metadata.json
+          if git diff --cached --quiet; then
+            printf 'Generated output unchanged; no branch or PR is needed.\n'
+            exit 0
+          else
+            code=$?
+            if [ "$code" -ne 1 ]; then exit "$code"; fi
+          fi
+          expected_source=$(printf '%s\t%s' "$GENERATED_BASE_SHA" "$GENERATED_BASE_REF")
+          if [ "$(git ls-remote --exit-code "$repository_url" "$GENERATED_BASE_REF")" != "$expected_source" ]; then
+            printf 'Selected branch changed during generation; refusing stale output.\n' >&2
+            exit 1
+          fi
+          existing_prs=$(gh pr list --repo emersonfelipesp/netbox-sdk-mock-api --head "$branch" --base "$target_branch" --state all --json number --jq length)
+          if [ "$existing_prs" != 0 ]; then
+            printf 'A proposal already exists or its state is unknown; refusing duplicate.\n' >&2
+            exit 1
+          fi
+          open_proposals=$(gh pr list --repo emersonfelipesp/netbox-sdk-mock-api --base "$target_branch" --state open --limit 1000 --json headRefName,isCrossRepository --jq 'if length >= 1000 then -1 else [.[] | select(.isCrossRepository == false and (.headRefName | startswith("generated/metadata-")))] | length end')
+          if [ "$open_proposals" != 0 ]; then
+            printf 'An owned generated-data proposal is already open or its state is unknown; refusing duplicate.\n' >&2
+            exit 1
+          fi
+          git switch -c "$branch" "$GENERATED_BASE_SHA"
+          git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add metadata.json
-          git commit -m "chore: refresh metadata.json [skip ci]"
-          git push
+          git commit -m "Refresh generated package metadata"
+          git diff --quiet "$GENERATED_BASE_SHA" HEAD -- . ':(exclude)metadata.json'
+          head=$(git rev-parse HEAD)
+          # The native create-ref endpoint refuses an existing branch atomically.
+          created_base=$(gh api --method POST repos/emersonfelipesp/netbox-sdk-mock-api/git/refs -f "ref=refs/heads/$branch" -f "sha=$GENERATED_BASE_SHA" --jq .object.sha)
+          if [ "$created_base" != "$GENERATED_BASE_SHA" ]; then
+            printf 'Unexpected owned-branch creation receipt; refusing push.\n' >&2
+            exit 1
+          fi
+          git push "$repository_url" "HEAD:refs/heads/$branch"
+          expected_head=$(printf '%s\trefs/heads/%s' "$head" "$branch")
+          if [ "$(git ls-remote --exit-code "$repository_url" "refs/heads/$branch")" != "$expected_head" ] || [ "$(git ls-remote --exit-code "$repository_url" "$GENERATED_BASE_REF")" != "$expected_source" ]; then
+            printf 'Owned branch or selected source changed; retain the branch and refuse the PR.\n' >&2
+            exit 1
+          fi
+          proposal=$(gh pr create --repo emersonfelipesp/netbox-sdk-mock-api --head "$branch" --base "$target_branch" --title "Refresh generated package metadata" --body "Propose the unchanged generator's metadata.json output from selected branch $target_branch at base $GENERATED_BASE_SHA. Native CI and the platform's owner approval and merge rules apply. This job does not update the target branch or merge this proposal.")
+          expected_pr=$(printf '%s\t%s' "$GENERATED_BASE_SHA" "$head")
+          actual_pr=$(gh pr view "$proposal" --repo emersonfelipesp/netbox-sdk-mock-api --json baseRefOid,headRefOid --jq '[.baseRefOid,.headRefOid] | @tsv')
+          if [ "$actual_pr" != "$expected_pr" ]; then
+            printf 'Proposal base or head changed; retain the PR for owner review.\n' >&2
+            exit 1
+          fi
+          open_proposals=$(gh pr list --repo emersonfelipesp/netbox-sdk-mock-api --base "$target_branch" --state open --limit 1000 --json headRefName,isCrossRepository --jq 'if length >= 1000 then -1 else [.[] | select(.isCrossRepository == false and (.headRefName | startswith("generated/metadata-")))] | length end')
+          if [ "$open_proposals" != 1 ]; then
+            printf 'Concurrent generated-data proposals detected; retain the PR for owner review.\n' >&2
+            exit 1
+          fi
+          printf 'Generated-data proposal: %s\nOwner approval of native CI and an owner-authorized merge are required; the target branch was not updated.\n' "$proposal"

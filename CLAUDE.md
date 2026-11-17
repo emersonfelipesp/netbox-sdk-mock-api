@@ -109,6 +109,19 @@ skips only for unselected jobs. On main pushes, the test summary also
 requires the original full mock and live NetBox matrices. Keep these stable
 summary checks separate from path-specific matrix check names.
 
+Scheduled and manual data generation proposes a run-owned pull request for
+only its original generated output against the exact selected source branch.
+It never directly updates or merges that target branch. Require the GitHub
+provider and a verified branch ref before generation or writeback. Metadata
+retains its original main-only write guard; model graphs retain the selected
+branch and never transplant feature-derived data onto main.
+Keep the original generators, events and no-change exits. Native CI and the
+platform owner approval and merge rules apply; unattended generation does
+not imply unattended publication. Use only the existing repository token
+with contents and pull-request write permissions, without dispatch, extra
+credentials, auto-merge, bypasses or polling. Preserve partial owned proposals
+on failure, and refuse changed bases, duplicate branches and unexpected paths.
+
 Retain the aiohttp security floor of 3.14.4 and the resolved dnspython floor of
 2.9.2 and OpenTelemetry API floor of 1.45.2. Resolve security updates through
 uv, preserve compatible OpenTelemetry family requirements, and audit the
