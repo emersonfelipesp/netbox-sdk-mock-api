@@ -53,6 +53,16 @@ Rules:
 
 ## Dependency Security
 
+Run the complete applicable quality workflows on main pushes and every pull
+request. Feature pushes do not start duplicate lint, security or test runs.
+Preserve every pull-request target, manual admission and all existing job
+bodies, runner choices, assertions and release workflows.
+
+Retain the aiohttp security floor of 3.14.4 and the resolved dnspython floor of
+2.9.2 and OpenTelemetry API floor of 1.45.2. Resolve security updates through
+uv, preserve compatible OpenTelemetry family requirements, and audit the
+complete exported graph without suppressing advisories.
+
 Keep both docs installation paths in `pyproject.toml` aligned, regenerate
 `uv.lock` with `uv`, and run `tests/test_dependency_security.py`. Audit the
 complete graph exported with

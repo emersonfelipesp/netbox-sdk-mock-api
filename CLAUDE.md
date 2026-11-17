@@ -97,6 +97,16 @@ Dependency-security changes must update both docs installation paths in
 `uv export --frozen --all-extras --all-groups --no-hashes --no-emit-project`;
 never hand-edit `uv.lock` or weaken a security floor to satisfy resolution.
 
+Run the complete applicable quality workflows on main pushes and every pull
+request. Feature pushes do not start duplicate lint, security or test runs.
+Preserve every pull-request target, manual admission and all existing job
+bodies, runner choices, assertions and release workflows.
+
+Retain the aiohttp security floor of 3.14.4 and the resolved dnspython floor of
+2.9.2 and OpenTelemetry API floor of 1.45.2. Resolve security updates through
+uv, preserve compatible OpenTelemetry family requirements, and audit the
+complete exported graph without suppressing advisories.
+
 If you need a minimal install boundary check:
 
 ```bash
