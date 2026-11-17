@@ -188,4 +188,4 @@ all = "ignore"
 entrypoint = "netbox_sdk.mock_main:app"
 
 [tool.uv]
-constraint-dependencies = ["multidict>=6.9.1"]
+constraint-dependencies = ["multidict>=6.9.1", "virtualenv>=21.14.13"]
