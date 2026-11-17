@@ -102,6 +102,13 @@ request. Feature pushes do not start duplicate lint, security or test runs.
 Preserve every pull-request target, manual admission and all existing job
 bodies, runner choices, assertions and release workflows.
 
+The security quality and test quality summaries run after every original
+job, including failures. Require successful scope selection, exact boolean
+scope outputs, success from every selected native matrix aggregate, and
+skips only for unselected jobs. On main pushes, the test summary also
+requires the original full mock and live NetBox matrices. Keep these stable
+summary checks separate from path-specific matrix check names.
+
 Retain the aiohttp security floor of 3.14.4 and the resolved dnspython floor of
 2.9.2 and OpenTelemetry API floor of 1.45.2. Resolve security updates through
 uv, preserve compatible OpenTelemetry family requirements, and audit the
