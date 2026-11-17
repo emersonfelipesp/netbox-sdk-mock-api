@@ -32,7 +32,7 @@ def _skip_if_no_live_netbox() -> tuple[str, str]:
 
 async def _client_or_skip() -> BranchingClient:
     url, token = _skip_if_no_live_netbox()
-    nb = api(base_url=url, token=token, ssl_verify=False)
+    nb = api(url=url, token=token)
     branching = BranchingClient(nb)
     if not await branching.is_available():
         pytest.skip("netbox-branching plugin is not installed on the live NetBox")

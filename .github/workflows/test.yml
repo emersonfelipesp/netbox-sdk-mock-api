@@ -29,7 +29,7 @@ jobs:
             run_all:
               - 'pyproject.toml'
               - 'uv.lock'
-              - 'tests/conftest.py'
+              - 'tests/**/*.py'
               - '.github/workflows/test.yml'
               - '.github/workflows/main-post-merge.yml'
               - '.github/workflows/publish-testpypi.yml'
