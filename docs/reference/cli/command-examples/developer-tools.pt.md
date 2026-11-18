@@ -32,7 +32,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.926s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -71,7 +71,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.831s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -96,7 +96,7 @@
      List all OpenAPI paths from the bundled NetBox schema.                         
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │   search      [SEARCH]  Optional substring filter on path                    │
+    │   search      [SEARCH]                                                       │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --method  -m      TEXT  Filter by HTTP method (GET, POST, PUT, PATCH,        │
@@ -106,7 +106,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.911s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -136,7 +136,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.919s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -732,7 +732,7 @@
     └──────────────────────────────────────────────────────────┴───────────────────┘
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.203s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -763,7 +763,7 @@
     └────────┴──────────────────────────────────┴─────────┘
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.027s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -797,7 +797,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.911s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -827,7 +827,7 @@
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --netbox-root  -n      PATH  Path to the NetBox Django project root          │
     │                              (contains dcim/, ipam/, etc.).                  │
-    │                              [default: /root/nms/netbox/netbox]              │
+    │                              [default: netbox]                               │
     │ --rebuild      -r            Force rebuild even if cache exists.             │
     │ --cache-path   -o      PATH  Output path for the JSON build file (default:   │
     │                              ~/.config/netbox-sdk/django_models.json).       │
@@ -835,7 +835,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.971s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -865,8 +865,7 @@
      nbx dev django-model fetch --auto                                              
                                                                                     
     ╭─ Arguments ──────────────────────────────────────────────────────────────────╮
-    │   tag      [TAG]  Release tag to fetch (e.g. v4.2.1). Omit with --auto to    │
-    │                   detect from connected NetBox.                              │
+    │   tag      [TAG]                                                             │
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ╭─ Options ────────────────────────────────────────────────────────────────────╮
     │ --auto  -a        Detect NetBox version from the default profile and fetch   │
@@ -875,6 +874,6 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.913s</span>
+<span class="nbx-badge nbx-badge--ok">saída&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

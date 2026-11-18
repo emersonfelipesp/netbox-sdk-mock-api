@@ -13,9 +13,9 @@ Parallelism strategy:
     overwhelming the NetBox demo instance.
 
 Config lifecycle:
-    1. Main process injects config into ``_RUNTIME_CONFIGS`` and saves to disk.
-    2. Each worker process loads config from disk (not from shared memory).
-    3. Main process cleans up after the pool shuts down.
+    1. Main process creates a temporary config root with placeholder credentials.
+    2. Every worker and CLI subprocess receives that root explicitly.
+    3. Main process removes the isolated root after capture, including on failure.
 """
 
 from __future__ import annotations
@@ -24,6 +24,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -46,6 +47,22 @@ def _local_cli_command(args: list[str]) -> list[str]:
     return [sys.executable, "-c", _LOCAL_CLI_BOOTSTRAP, *args]
 
 
+def _isolated_subprocess_env(config_home: str) -> dict[str, str]:
+    """Return an environment that cannot merge host credentials into captures."""
+    env = dict(os.environ)
+    for name in (
+        "NETBOX_URL",
+        "NETBOX_TOKEN_KEY",
+        "NETBOX_TOKEN_SECRET",
+        "NETBOX_SSL_VERIFY",
+        "DEMO_USERNAME",
+        "DEMO_PASSWORD",
+    ):
+        env.pop(name, None)
+    env["XDG_CONFIG_HOME"] = config_home
+    return env
+
+
 # ── Top-level worker function (required for ProcessPoolExecutor) ─────────
 
 
@@ -54,6 +71,8 @@ def _worker_capture(
     *,
     profile: str,
     markdown_output: bool,
+    config_home: str,
+    capture_config: dict[str, object],
 ) -> dict:
     """Execute a single capture in a child process.
 
@@ -67,32 +86,10 @@ def _worker_capture(
         inject_format_flag,
         supports_format_variants,
     )
-    from netbox_sdk.config import (
-        DEMO_BASE_URL,
-        Config,
-        is_runtime_config_complete,
-        load_profile_config,
-        normalize_base_url,
-    )
+    from netbox_sdk.config import Config
 
-    existing = load_profile_config(profile)
-    if is_runtime_config_complete(existing):
-        cli_mod._RUNTIME_CONFIGS[profile] = existing
-    else:
-        if profile == "demo":
-            base_url = DEMO_BASE_URL
-        else:
-            raw = os.environ.get("NETBOX_URL", "https://netbox.example.com").strip()
-            base_url = normalize_base_url(raw)
-        token_key = os.environ.get("NETBOX_TOKEN_KEY", "docgen-placeholder").strip()
-        token_secret = os.environ.get("NETBOX_TOKEN_SECRET", "placeholder").strip()
-        timeout = float(os.environ.get("NBX_DOC_CAPTURE_TIMEOUT", "30"))
-        cli_mod._RUNTIME_CONFIGS[profile] = Config(
-            base_url=base_url,
-            token_key=token_key,
-            token_secret=token_secret,
-            timeout=timeout,
-        )
+    cli_mod._RUNTIME_CONFIGS[profile] = Config.model_validate(capture_config)
+    subprocess_env = _isolated_subprocess_env(config_home)
 
     _rt._get_index()
 
@@ -121,6 +118,7 @@ def _worker_capture(
             result = subprocess.run(
                 _local_cli_command(args),
                 capture_output=True,
+                env=subprocess_env,
                 text=True,
                 timeout=_SUBPROCESS_TIMEOUT_SECONDS,
             )
@@ -212,9 +210,19 @@ class CaptureEngine:
         for true parallelism.  Each worker is an isolated Python process
         with its own ``sys.stdout`` and ``CliRunner``.
         """
-        if self._concurrency <= 1 or len(specs) <= 1:
-            return self._capture_serial(specs, profile=profile)
-        return self._capture_parallel(specs, profile=profile)
+        with tempfile.TemporaryDirectory(prefix="nbx-docgen-config-") as config_home:
+            capture_config = self._write_isolated_config(profile, Path(config_home))
+            if self._concurrency <= 1 or len(specs) <= 1:
+                return self._capture_serial(
+                    specs,
+                    config_home=config_home,
+                )
+            return self._capture_parallel(
+                specs,
+                profile=profile,
+                config_home=config_home,
+                capture_config=capture_config,
+            )
 
     def write_artifacts(
         self,
@@ -241,51 +249,20 @@ class CaptureEngine:
         self,
         specs: list[CaptureSpec],
         *,
-        profile: str,
+        config_home: str,
     ) -> list[CaptureResult]:
-        from netbox_cli import cli as cli_mod  # noqa: PLC0415
         from netbox_cli import runtime as _rt  # noqa: PLC0415
-        from netbox_sdk.config import (  # noqa: PLC0415
-            DEMO_BASE_URL,
-            Config,
-            is_runtime_config_complete,
-            load_profile_config,
-            normalize_base_url,
-        )
 
         # Pre-load schema.
         _rt._get_index()
 
-        # Inject config once.
-        existing = load_profile_config(profile)
-        if is_runtime_config_complete(existing):
-            cli_mod._RUNTIME_CONFIGS[profile] = existing
-            stub = False
-        else:
-            stub = True
-            if profile == "demo":
-                base_url = DEMO_BASE_URL
-            else:
-                raw = os.environ.get("NETBOX_URL", "https://netbox.example.com").strip()
-                base_url = normalize_base_url(raw)
-            cli_mod._RUNTIME_CONFIGS[profile] = Config(
-                base_url=base_url,
-                token_key=os.environ.get("NETBOX_TOKEN_KEY", "docgen-placeholder").strip(),
-                token_secret=os.environ.get("NETBOX_TOKEN_SECRET", "placeholder").strip(),
-                timeout=float(os.environ.get("NBX_DOC_CAPTURE_TIMEOUT", "30")),
-            )
-
-        try:
-            return [self._run_one_serial(spec, profile=profile) for spec in specs]
-        finally:
-            if stub:
-                cli_mod._RUNTIME_CONFIGS.pop(profile, None)
+        return [self._run_one_serial(spec, config_home=config_home) for spec in specs]
 
     def _run_one_serial(
         self,
         spec: CaptureSpec,
         *,
-        profile: str,
+        config_home: str,
     ) -> CaptureResult:
         from netbox_cli.docgen.format import convert_json_to_variants  # noqa: PLC0415
         from netbox_cli.docgen.models import (  # noqa: PLC0415
@@ -296,7 +273,7 @@ class CaptureEngine:
 
         argv_base = list(spec.argv)
         argv = argv_with_markdown_output(spec.argv, enabled=self._markdown_output)
-        code, stdout, elapsed = self._invoke_cli(argv, safe=spec.safe)
+        code, stdout, elapsed = self._invoke_cli(argv, safe=spec.safe, config_home=config_home)
 
         result = CaptureResult(
             surface=spec.surface,
@@ -312,7 +289,7 @@ class CaptureEngine:
 
         if supports_format_variants(spec.argv):
             json_argv = inject_format_flag(argv, "--json")
-            _, json_stdout, _ = self._invoke_cli(json_argv, safe=True)
+            _, json_stdout, _ = self._invoke_cli(json_argv, safe=True, config_home=config_home)
             variants = convert_json_to_variants(json_stdout)
             if variants is not None:
                 result.stdout_json = variants.json_text
@@ -321,12 +298,15 @@ class CaptureEngine:
 
         return result
 
-    def _invoke_cli(self, argv: list[str], *, safe: bool) -> tuple[int, str, float]:
+    def _invoke_cli(
+        self, argv: list[str], *, safe: bool, config_home: str
+    ) -> tuple[int, str, float]:
         started = time.perf_counter()
         try:
             result = subprocess.run(
                 _local_cli_command(argv),
                 capture_output=True,
+                env=_isolated_subprocess_env(config_home),
                 text=True,
                 timeout=_SUBPROCESS_TIMEOUT_SECONDS,
             )
@@ -351,11 +331,10 @@ class CaptureEngine:
         specs: list[CaptureSpec],
         *,
         profile: str,
+        config_home: str,
+        capture_config: dict[str, object],
     ) -> list[CaptureResult]:
         """Run captures across isolated worker processes."""
-        # Ensure config is saved to disk so workers can load it.
-        self._ensure_config_on_disk(profile)
-
         spec_dicts = [
             {
                 "surface": s.surface,
@@ -375,6 +354,8 @@ class CaptureEngine:
                     spec_dict,
                     profile=profile,
                     markdown_output=self._markdown_output,
+                    config_home=config_home,
+                    capture_config=capture_config,
                 ): idx
                 for idx, spec_dict in enumerate(spec_dicts)
             }
@@ -401,31 +382,29 @@ class CaptureEngine:
         ]
 
     @staticmethod
-    def _ensure_config_on_disk(profile: str) -> None:
-        """Ensure the profile config exists on disk so child processes can load it."""
-        from netbox_sdk.config import (  # noqa: PLC0415
-            DEMO_BASE_URL,
-            Config,
-            is_runtime_config_complete,
-            load_profile_config,
-            normalize_base_url,
-            save_profile_config,
+    def _write_isolated_config(profile: str, config_home: Path) -> dict[str, object]:
+        """Write placeholder capture credentials under an isolated config root."""
+        from netbox_sdk.config import DEMO_BASE_URL, Config, normalize_base_url  # noqa: PLC0415
+
+        base_url = (
+            DEMO_BASE_URL
+            if profile == "demo"
+            else normalize_base_url(
+                os.environ.get("NETBOX_URL", "https://netbox.example.com").strip()
+            )
         )
-
-        existing = load_profile_config(profile)
-        if is_runtime_config_complete(existing):
-            return
-
-        if profile == "demo":
-            base_url = DEMO_BASE_URL
-        else:
-            raw = os.environ.get("NETBOX_URL", "https://netbox.example.com").strip()
-            base_url = normalize_base_url(raw)
-
-        stub_cfg = Config(
+        capture_config = Config(
             base_url=base_url,
-            token_key=os.environ.get("NETBOX_TOKEN_KEY", "docgen-placeholder").strip(),
-            token_secret=os.environ.get("NETBOX_TOKEN_SECRET", "placeholder").strip(),
-            timeout=float(os.environ.get("NBX_DOC_CAPTURE_TIMEOUT", "30")),
+            token_key="docgen-placeholder",
+            token_secret="placeholder",
+            timeout=30.0,
+        ).model_dump()
+        config_dir = config_home / "netbox-sdk"
+        config_dir.mkdir(parents=True, mode=0o700)
+        config_path = config_dir / "config.json"
+        config_path.write_text(
+            json.dumps({"profiles": {profile: capture_config}}, indent=2),
+            encoding="utf-8",
         )
-        save_profile_config(profile, stub_cfg)
+        config_path.chmod(0o600)
+        return capture_config

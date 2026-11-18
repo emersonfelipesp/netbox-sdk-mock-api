@@ -342,15 +342,15 @@ def merge_log_files(self) -> None:
 
 ---
 
-## Lessons for NMS-CLI
+## Lessons for terminal SDK clients
 
 | Pattern | How Toolong Does It | Applicability |
 |---------|--------------------|--------------|
-| Constant-time large file access | Line offset index, no full load | Log/capture file viewing in NMS |
+| Constant-time large file access | Line offset index, no full load | Log and capture file viewing |
 | Live tailing | File watcher integration | Live CLI output tailing |
-| Pipe support | Accept stdin as a virtual file | `nms-cli some-cmd | tl`-style piping |
+| Pipe support | Accept stdin as a virtual file | CLI output piped into a viewer |
 | Multi-file tabs | Each file = one tab | Multi-device logs in tabs |
 | Timestamp-based merge | Regex detection + sort merge | Correlate logs across devices |
 | JSONL pretty-print | Per-line JSON detection | Structured log rendering |
 | Compressed file transparent open | Auto-detect `.bz`/`.bz2` | Compressed capture file support |
-| F1 in-app help | Key binding reference modal | Help overlay in NMS TUI |
+| F1 in-app help | Key binding reference modal | Help overlay in a TUI |

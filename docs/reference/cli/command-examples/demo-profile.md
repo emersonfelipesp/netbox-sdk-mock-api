@@ -16,7 +16,7 @@
 
     ```text
                                                                                     
-     Usage: nbx demo [OPTIONS] COMMAND [ARGS]...                                    
+     Usage: nbx demo [OPTIONS] [COMMAND] [ARGS]...                                  
                                                                                     
      NetBox demo.netbox.dev profile and command tree.                               
                                                                                     
@@ -53,7 +53,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.922s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -98,7 +98,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.930s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -128,7 +128,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.755s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -167,7 +167,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.848s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -199,7 +199,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.791s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -233,7 +233,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.895s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -265,6 +265,6 @@
     }
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">3.726s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

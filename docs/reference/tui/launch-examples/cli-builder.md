@@ -29,7 +29,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.043s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -60,7 +60,7 @@
     ╰──────────────────────────────────────────────────────────────────────────────╯
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.471s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---
 
@@ -87,6 +87,6 @@
     - tokyo-night
     ```
 
-<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">4.196s</span>
+<span class="nbx-badge nbx-badge--ok">exit&nbsp;0</span> <span class="nbx-badge nbx-badge--neutral">0.000s</span>
 
 ---

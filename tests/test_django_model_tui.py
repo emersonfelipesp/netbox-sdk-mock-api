@@ -6,12 +6,14 @@ the expected VerticalScroll containers for scrollbar functionality.
 
 from __future__ import annotations
 
+from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
 from textual.containers import VerticalScroll
 from textual.widgets import Static
 
+from netbox_cli.django_model import django_model_tui
 from netbox_tui.django_model_app import DjangoModelTuiApp
 
 pytestmark = pytest.mark.suite_tui
@@ -91,3 +93,32 @@ async def test_django_model_tui_renders_basic_content(mock_model_store):
         # Should have initial placeholder content
         assert "Select a model" in str(diagram_widget.content)
         assert "Select a model" in str(source_widget.content)
+
+
+def test_rebuild_uses_supplied_netbox_root(tmp_path: Path, mock_model_store) -> None:
+    netbox_root = tmp_path / "custom-netbox"
+    netbox_root.mkdir()
+    mock_model_store.build.return_value = {
+        "models": {},
+        "edges": [],
+        "stats": {"total_models": 0, "total_edges": 0, "apps": []},
+    }
+    app = DjangoModelTuiApp(store=mock_model_store, netbox_root=netbox_root)
+    app._build_tree = MagicMock()
+    app._render_stats = MagicMock()
+    app.notify = MagicMock()
+
+    app._rebuild()
+
+    mock_model_store.build.assert_called_once_with(netbox_root)
+
+
+def test_cli_propagates_supplied_netbox_root(tmp_path: Path) -> None:
+    netbox_root = tmp_path / "custom-netbox"
+    cache_path = tmp_path / "models.json"
+    cache_path.write_text("{}", encoding="utf-8")
+
+    with patch("netbox_tui.django_model_app.run_django_model_tui") as run_tui:
+        django_model_tui(theme=None, netbox_root=netbox_root, cache_path=cache_path)
+
+    assert run_tui.call_args.kwargs["netbox_root"] == netbox_root
